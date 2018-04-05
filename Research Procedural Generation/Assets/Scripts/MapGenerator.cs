@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public int drawHeight = 0;
     public int KeyRooms = 3;
     public int ExtraRooms = 5;
 
@@ -15,7 +14,7 @@ public class MapGenerator : MonoBehaviour
     public int Seed = 0;
 
     private GameObject[] KeyPath;
-    private bool Draw = true;
+    public bool Draw = true;
 
     private void Start()
     {
@@ -357,7 +356,6 @@ public class MapGenerator : MonoBehaviour
                     FirstRoom.GetComponent<Room>().SouthDoor = door;
                     SecondRoom.GetComponent<Room>().NorthDoor = door;
                 }
-
                 return door;
             }
         }
@@ -386,6 +384,11 @@ public class MapGenerator : MonoBehaviour
         }
 
         FirstRoom.GetComponent<Room>();
+        if (FirstRoom.GetComponent<Room>().KeyAccess > SecondRoom.GetComponent<Room>().KeyAccess) newDoor.GetComponent<Door>().KeyAccess = FirstRoom.GetComponent<Room>().KeyAccess;
+        else newDoor.GetComponent<Door>().KeyAccess = SecondRoom.GetComponent<Room>().KeyAccess;
+
+        newDoor.GetComponent<Door>().setColor();
+
         return newDoor;
     }
 
@@ -419,14 +422,14 @@ public class MapGenerator : MonoBehaviour
         lRend.startWidth = 1;
         lRend.endWidth = 1;
         lRend.numPositions = Path.Length + 1;
-        lRend.SetPosition(0, new Vector3(Path[0].transform.position.x, drawHeight, Path[0].transform.position.z));
+        lRend.SetPosition(0, new Vector3(Path[0].transform.position.x, 2, Path[0].transform.position.z));
 
         for (int i = 0; i < Path.Length; i++)
         {
-            if (Path[i] == null) lRend.SetPosition(i + 1, new Vector3(LastPoint.transform.position.x, drawHeight, LastPoint.transform.position.z));
+            if (Path[i] == null) lRend.SetPosition(i + 1, new Vector3(LastPoint.transform.position.x, 2, LastPoint.transform.position.z));
             else
             {
-                lRend.SetPosition(i + 1, new Vector3(Path[i].transform.position.x, drawHeight, Path[i].transform.position.z));
+                lRend.SetPosition(i + 1, new Vector3(Path[i].transform.position.x, 2, Path[i].transform.position.z));
                 LastPoint = Path[i];
             }
         }

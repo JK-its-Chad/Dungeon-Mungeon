@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour {
+public class Door : MonoBehaviour
+{
+    public Material[] Colors = new Material[20];
+    public int KeyAccess;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void setColor()
+    {
+        gameObject.GetComponent<Renderer>().material = Colors[KeyAccess];
+    }
 }
