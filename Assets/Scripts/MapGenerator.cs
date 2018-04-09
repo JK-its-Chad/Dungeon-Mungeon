@@ -47,19 +47,19 @@ public class MapGenerator : MonoBehaviour
 
             if (Direction == 1)
             {
-                KeyVector = new Vector3(X * 10, 0, Z * 10);
+                KeyVector = new Vector3(X * roomsize, 0, Z * roomsize);
             }
             else if (Direction == 2)
             {
-                KeyVector = new Vector3(-X * 10, 0, Z * 10);
+                KeyVector = new Vector3(-X * roomsize, 0, Z * roomsize);
             }
             else if (Direction == 3)
             {
-                KeyVector = new Vector3(-X * 10, 0, -Z * 10);
+                KeyVector = new Vector3(-X * roomsize, 0, -Z * roomsize);
             }
             else if (Direction == 4)
             {
-                KeyVector = new Vector3(X * 10, 0, -Z * 10);
+                KeyVector = new Vector3(X * roomsize, 0, -Z * roomsize);
             }
 
             GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
@@ -71,22 +71,22 @@ public class MapGenerator : MonoBehaviour
                     successful = false;
                     break;
                 }
-                else if (room.transform.position.x == (KeyVector.x + 10) && room.transform.position.z == KeyVector.z)
+                else if (room.transform.position.x == (KeyVector.x + roomsize) && room.transform.position.z == KeyVector.z)
                 {
                     successful = false;
                     break;
                 }
-                else if (room.transform.position.x == KeyVector.x && room.transform.position.z == (KeyVector.z + 10))
+                else if (room.transform.position.x == KeyVector.x && room.transform.position.z == (KeyVector.z + roomsize))
                 {
                     successful = false;
                     break;
                 }
-                else if (room.transform.position.x == (KeyVector.x - 10) && room.transform.position.z == KeyVector.z)
+                else if (room.transform.position.x == (KeyVector.x - roomsize) && room.transform.position.z == KeyVector.z)
                 {
                     successful = false;
                     break;
                 }
-                else if (room.transform.position.x == KeyVector.x && room.transform.position.z == (KeyVector.z - 10))
+                else if (room.transform.position.x == KeyVector.x && room.transform.position.z == (KeyVector.z - roomsize))
                 {
                     successful = false;
                     break;
@@ -123,19 +123,19 @@ public class MapGenerator : MonoBehaviour
 
             if (Direction == 1)
             {
-                KeyVector = new Vector3(X * 10, 0, Z * 10);
+                KeyVector = new Vector3(X * roomsize, 0, Z * roomsize);
             }
             else if (Direction == 2)
             {
-                KeyVector = new Vector3(-X * 10, 0, Z * 10);
+                KeyVector = new Vector3(-X * roomsize, 0, Z * roomsize);
             }
             else if (Direction == 3)
             {
-                KeyVector = new Vector3(-X * 10, 0, -Z * 10);
+                KeyVector = new Vector3(-X * roomsize, 0, -Z * roomsize);
             }
             else if (Direction == 4)
             {
-                KeyVector = new Vector3(X * 10, 0, -Z * 10);
+                KeyVector = new Vector3(X * roomsize, 0, -Z * roomsize);
             }
 
             GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
@@ -196,14 +196,14 @@ public class MapGenerator : MonoBehaviour
                 int UpOrRight = Random.Range(0, 2);
                 if (UpOrRight == 1)
                 {
-                    currentGO.GetComponent<Room>().NorthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z + 10), Quaternion.identity, KeyPermission);
+                    currentGO.GetComponent<Room>().NorthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z + roomsize), Quaternion.identity, KeyPermission);
                     currentGO.GetComponent<Room>().NorthRoom.GetComponent<Room>().SouthRoom = currentGO;
                     currentGO = currentGO.GetComponent<Room>().NorthRoom;
                     AddDoor(currentGO, currentGO.GetComponent<Room>().SouthRoom);
                 }
                 else
                 {
-                    currentGO.GetComponent<Room>().EastRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x + 10, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
+                    currentGO.GetComponent<Room>().EastRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x + roomsize, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
                     currentGO.GetComponent<Room>().EastRoom.GetComponent<Room>().WestRoom = currentGO;
                     currentGO = currentGO.GetComponent<Room>().EastRoom;
                     AddDoor(currentGO, currentGO.GetComponent<Room>().WestRoom);
@@ -214,14 +214,14 @@ public class MapGenerator : MonoBehaviour
                 int UpOrLeft = Random.Range(0, 2);
                 if (UpOrLeft == 1)
                 {
-                    currentGO.GetComponent<Room>().NorthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z + 10), Quaternion.identity, KeyPermission);
+                    currentGO.GetComponent<Room>().NorthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z + roomsize), Quaternion.identity, KeyPermission);
                     currentGO.GetComponent<Room>().NorthRoom.GetComponent<Room>().SouthRoom = currentGO;
                     currentGO = currentGO.GetComponent<Room>().NorthRoom;
                     AddDoor(currentGO, currentGO.GetComponent<Room>().SouthRoom);
                 }
                 else
                 {
-                    currentGO.GetComponent<Room>().WestRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x - 10, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
+                    currentGO.GetComponent<Room>().WestRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x - roomsize, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
                     currentGO.GetComponent<Room>().WestRoom.GetComponent<Room>().EastRoom = currentGO;
                     currentGO = currentGO.GetComponent<Room>().WestRoom;
                     AddDoor(currentGO, currentGO.GetComponent<Room>().EastRoom);
@@ -232,14 +232,14 @@ public class MapGenerator : MonoBehaviour
                 int DownOrLeft = Random.Range(0, 2);
                 if (DownOrLeft == 1)
                 {
-                    currentGO.GetComponent<Room>().SouthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z - 10), Quaternion.identity, KeyPermission);
+                    currentGO.GetComponent<Room>().SouthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z - roomsize), Quaternion.identity, KeyPermission);
                     currentGO.GetComponent<Room>().SouthRoom.GetComponent<Room>().NorthRoom = currentGO;
                     currentGO = currentGO.GetComponent<Room>().SouthRoom;
                     AddDoor(currentGO, currentGO.GetComponent<Room>().NorthRoom);
                 }
                 else
                 {
-                    currentGO.GetComponent<Room>().WestRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x - 10, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
+                    currentGO.GetComponent<Room>().WestRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x - roomsize, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
                     currentGO.GetComponent<Room>().WestRoom.GetComponent<Room>().EastRoom = currentGO;
                     currentGO = currentGO.GetComponent<Room>().WestRoom;
                     AddDoor(currentGO, currentGO.GetComponent<Room>().EastRoom);
@@ -250,14 +250,14 @@ public class MapGenerator : MonoBehaviour
                 int DownOrRight = Random.Range(0, 2);
                 if (DownOrRight == 1)
                 {
-                    currentGO.GetComponent<Room>().SouthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z - 10), Quaternion.identity, KeyPermission);
+                    currentGO.GetComponent<Room>().SouthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z - roomsize), Quaternion.identity, KeyPermission);
                     currentGO.GetComponent<Room>().SouthRoom.GetComponent<Room>().NorthRoom = currentGO;
                     currentGO = currentGO.GetComponent<Room>().SouthRoom;
                     AddDoor(currentGO, currentGO.GetComponent<Room>().NorthRoom);
                 }
                 else
                 {
-                    currentGO.GetComponent<Room>().EastRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x + 10, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
+                    currentGO.GetComponent<Room>().EastRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x + roomsize, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
                     currentGO.GetComponent<Room>().EastRoom.GetComponent<Room>().WestRoom = currentGO;
                     currentGO = currentGO.GetComponent<Room>().EastRoom;
                     AddDoor(currentGO, currentGO.GetComponent<Room>().WestRoom);
@@ -265,28 +265,28 @@ public class MapGenerator : MonoBehaviour
             }
             else if (currentGO.transform.position.x == EndRoom.transform.position.x && currentGO.transform.position.z < EndRoom.transform.position.z)
             {
-                currentGO.GetComponent<Room>().NorthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z + 10), Quaternion.identity, KeyPermission);
+                currentGO.GetComponent<Room>().NorthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z + roomsize), Quaternion.identity, KeyPermission);
                 currentGO.GetComponent<Room>().NorthRoom.GetComponent<Room>().SouthRoom = currentGO;
                 currentGO = currentGO.GetComponent<Room>().NorthRoom;
                 AddDoor(currentGO, currentGO.GetComponent<Room>().SouthRoom);
             }
             else if (currentGO.transform.position.x > EndRoom.transform.position.x && currentGO.transform.position.z == EndRoom.transform.position.z)
             {
-                currentGO.GetComponent<Room>().WestRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x - 10, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
+                currentGO.GetComponent<Room>().WestRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x - roomsize, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
                 currentGO.GetComponent<Room>().WestRoom.GetComponent<Room>().EastRoom = currentGO;
                 currentGO = currentGO.GetComponent<Room>().WestRoom;
                 AddDoor(currentGO, currentGO.GetComponent<Room>().EastRoom);
             }
             else if (currentGO.transform.position.x == EndRoom.transform.position.x && currentGO.transform.position.z > EndRoom.transform.position.z)
             {
-                currentGO.GetComponent<Room>().SouthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z - 10), Quaternion.identity, KeyPermission);
+                currentGO.GetComponent<Room>().SouthRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x, 0, currentGO.transform.position.z - roomsize), Quaternion.identity, KeyPermission);
                 currentGO.GetComponent<Room>().SouthRoom.GetComponent<Room>().NorthRoom = currentGO;
                 currentGO = currentGO.GetComponent<Room>().SouthRoom;
                 AddDoor(currentGO, currentGO.GetComponent<Room>().NorthRoom);
             }
             else if (currentGO.transform.position.x < EndRoom.transform.position.x && currentGO.transform.position.z == EndRoom.transform.position.z)
             {
-                currentGO.GetComponent<Room>().EastRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x + 10, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
+                currentGO.GetComponent<Room>().EastRoom = RequestSpawn(Room, new Vector3(currentGO.transform.position.x + roomsize, 0, currentGO.transform.position.z), Quaternion.identity, KeyPermission);
                 currentGO.GetComponent<Room>().EastRoom.GetComponent<Room>().WestRoom = currentGO;
                 currentGO = currentGO.GetComponent<Room>().EastRoom;
                 AddDoor(currentGO, currentGO.GetComponent<Room>().WestRoom);
@@ -307,22 +307,22 @@ public class MapGenerator : MonoBehaviour
         {
             if (Position.x < Target.x)
             {
-                Position.x += 10;
+                Position.x += roomsize;
                 count++;
             }
             else if (Position.x > Target.x)
             {
-                Position.x -= 10;
+                Position.x -= roomsize;
                 count++;
             }
             else if (Position.z < Target.z)
             {
-                Position.z += 10;
+                Position.z += roomsize;
                 count++;
             }
             else if (Position.z > Target.z)
             {
-                Position.z -= 10;
+                Position.z -= roomsize;
                 count++;
             }
         }
