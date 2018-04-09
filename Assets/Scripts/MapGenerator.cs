@@ -7,6 +7,8 @@ public class MapGenerator : MonoBehaviour
     public int KeyRooms = 3;
     public int ExtraRooms = 5;
 
+    private int roomsize = 51;
+
     public GameObject Room;
     public GameObject KeyRoom;
     public GameObject ExtraRoom;
@@ -22,6 +24,7 @@ public class MapGenerator : MonoBehaviour
         KeyPath = new GameObject[100];
         PlaceKeyRooms();
         PlaceExtraRooms();
+        CreateRooms();
 
         GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
     }
@@ -432,6 +435,19 @@ public class MapGenerator : MonoBehaviour
                 lRend.SetPosition(i + 1, new Vector3(Path[i].transform.position.x, 2, Path[i].transform.position.z));
                 LastPoint = Path[i];
             }
+        }
+    }
+
+    private void CreateRooms()
+    {
+        GameObject[] Rooms = GameObject.FindGameObjectsWithTag("Room");
+        RoomSelectorScript RoomChanger = GameObject.Find("RoomSelector").GetComponent<RoomSelectorScript>();
+        foreach(GameObject room in Rooms)
+        {
+            Instantiate(RoomChanger.PickRoom(room.GetComponent<Room>()),
+                        room.transform.position,
+                        Quaternion.identity);
+            Destroy(room);
         }
     }
 }

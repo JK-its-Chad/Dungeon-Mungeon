@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomSelectorScript : MonoBehaviour {
+public class RoomSelectorScript : MonoBehaviour
+{
 
     public GameObject U, D, L, R,
                       UD, RL, UR, UL, DR, DL,
@@ -11,136 +12,131 @@ public class RoomSelectorScript : MonoBehaviour {
     public GameObject bossU, bossL, bossR, bossD;
     public GameObject itemU, itemL, itemR, itemD;
 
-    public bool up, down, left, right;
-
     public int type; // 0 = normal, 1 = start
 
     public GameObject roomSpawn;
-	
-    public void PickRoom()
-    {
-        //if (type == 0 || type == 1)
-        //{
-            if (up)
-            {
-                if (down)
-                {
-                    if (right)
-                    {
-                        if (left)
-                        {
-                            roomSpawn = UDLR;
-                        }
-                        else
-                        {
-                            roomSpawn = DRU;
-                        }
-                    }
-                    else if (left)
-                    {
-                        roomSpawn = ULD;
-                    }
-                    else
-                    {
-                        roomSpawn = UD;
-                    }
-                }
-                else
-                {
-                    if (right)
-                    {
-                        if (left)
-                        {
-                            roomSpawn = URL;
-                        }
-                        else
-                        {
-                            roomSpawn = UR;
-                        }
-                    }
-                    else if (left)
-                    {
-                        roomSpawn = UL;
-                    }
-                    else
-                    {
-                        roomSpawn = U;
-                    }
-                }
-            }
-            else if (down)
-            {
-                if (right)
-                {
-                    if (left)
-                    {
-                        roomSpawn = DLR;
-                    }
-                    else
-                    {
-                        roomSpawn = DR;
-                    }
-                }
-                else if (left)
-                {
-                    roomSpawn = DL;
-                }
-                else
-                {
-                    roomSpawn = D;
-                }
-            }
-            else if (right)
-            {
-                if (left)
-                {
-                    roomSpawn = RL;
-                }
-                else
-                {
-                    roomSpawn = R;
-                }
-            }
-            else if (left)
-            {
-                roomSpawn = L;
-            }
-        //}
 
-        if(type == 2)
+    public GameObject PickRoom(Room room)
+    {
+        if (room.NorthDoor)
         {
-            if(up)
+            if (room.SouthDoor)
+            {
+                if (room.EastDoor)
+                {
+                    if (room.WestDoor)
+                    {
+                        roomSpawn = UDLR;
+                    }
+                    else
+                    {
+                        roomSpawn = DRU;
+                    }
+                }
+                else if (room.WestDoor)
+                {
+                    roomSpawn = ULD;
+                }
+                else
+                {
+                    roomSpawn = UD;
+                }
+            }
+            else
+            {
+                if (room.EastDoor)
+                {
+                    if (room.WestDoor)
+                    {
+                        roomSpawn = URL;
+                    }
+                    else
+                    {
+                        roomSpawn = UR;
+                    }
+                }
+                else if (room.WestDoor)
+                {
+                    roomSpawn = UL;
+                }
+                else
+                {
+                    roomSpawn = U;
+                }
+            }
+        }
+        else if (room.SouthDoor)
+        {
+            if (room.EastDoor)
+            {
+                if (room.WestDoor)
+                {
+                    roomSpawn = DLR;
+                }
+                else
+                {
+                    roomSpawn = DR;
+                }
+            }
+            else if (room.WestDoor)
+            {
+                roomSpawn = DL;
+            }
+            else
+            {
+                roomSpawn = D;
+            }
+        }
+        else if (room.EastDoor)
+        {
+            if (room.WestDoor)
+            {
+                roomSpawn = RL;
+            }
+            else
+            {
+                roomSpawn = R;
+            }
+        }
+        else if (room.WestDoor)
+        {
+            roomSpawn = L;
+        }
+
+        if (type == 2)
+        {
+            if (room.NorthDoor)
             {
                 roomSpawn = bossU;
             }
-            if(down)
+            if (room.SouthDoor)
             {
                 roomSpawn = bossD;
             }
-            if(left)
+            if (room.WestDoor)
             {
                 roomSpawn = bossL;
             }
-            if(right)
+            if (room.EastDoor)
             {
                 roomSpawn = bossR;
             }
         }
         if (type == 3)
         {
-            if (up)
+            if (room.NorthDoor)
             {
                 roomSpawn = itemU;
             }
-            if (down)
+            if (room.SouthDoor)
             {
                 roomSpawn = itemD;
             }
-            if (left)
+            if (room.WestDoor)
             {
                 roomSpawn = itemL;
             }
-            if (right)
+            if (room.EastDoor)
             {
                 roomSpawn = itemR;
             }
@@ -150,7 +146,20 @@ public class RoomSelectorScript : MonoBehaviour {
         {
             print("HUGE PROBLEM");
         }
-        
+
+        Room newRoom = roomSpawn.AddComponent<Room>();
+
+        newRoom.NorthDoor = room.NorthDoor;
+        newRoom.SouthDoor = room.SouthDoor;
+        newRoom.WestDoor = room.WestDoor;
+        newRoom.EastDoor = room.EastDoor;
+
+        newRoom.NorthRoom = room.NorthRoom;
+        newRoom.SouthRoom = room.SouthRoom;
+        newRoom.WestRoom = room.WestRoom;
+        newRoom.EastRoom = room.EastRoom;
+
+        return roomSpawn;
     }
-    
+
 }
