@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Generation.unity
+- path: C:/Users/NHTI/Downloads/RoomGeneration/RoomGeneration/RoomGeneration/RoomGeneration/Assets/Dungeon.unity
   isLoaded: 1
   isActive: 1

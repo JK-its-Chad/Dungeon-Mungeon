@@ -421,7 +421,7 @@ public class MapGenerator : MonoBehaviour
         lRend.material = new Material(Shader.Find("Particles/Additive"));
         lRend.startWidth = 1;
         lRend.endWidth = 1;
-        lRend.numPositions = Path.Length + 1;
+        lRend.positionCount = Path.Length + 1;
         lRend.SetPosition(0, new Vector3(Path[0].transform.position.x, 2, Path[0].transform.position.z));
 
         for (int i = 0; i < Path.Length; i++)
