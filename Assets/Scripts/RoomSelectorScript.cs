@@ -147,7 +147,7 @@ public class RoomSelectorScript : MonoBehaviour
             print("HUGE PROBLEM");
         }
 
-        Room newRoom = roomSpawn.AddComponent<Room>();
+        Room newRoom = roomSpawn.GetComponent<Room>();
 
         newRoom.NorthDoor = room.NorthDoor;
         newRoom.SouthDoor = room.SouthDoor;
