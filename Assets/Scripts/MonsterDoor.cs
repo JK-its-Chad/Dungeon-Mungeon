@@ -22,11 +22,6 @@ public class MonsterDoor : MonoBehaviour {
     {
         trans = GetComponent<Transform>();
 	}
-	
-	void Update ()
-    {
-		
-	}
 
     void pickProp(Vector3 pos)
     {
@@ -73,8 +68,8 @@ public class MonsterDoor : MonoBehaviour {
     {
         Vector3 position = center;
 
-        position.x += Random.Range(-23, 23);
-        position.z += Random.Range(-23, 23);
+        position.x += Random.Range(-20, 20);
+        position.z += Random.Range(-20, 20);
 
         return position;
     }
@@ -84,14 +79,29 @@ public class MonsterDoor : MonoBehaviour {
         if(other.tag == "Player")
         {
             Vector3 centerOfRoom = Vector3.zero;
-            if (other.transform.position.z > trans.position.z) // player is north of door
+            if (trans.rotation.y == 0)
             {
-                centerOfRoom = new Vector3(trans.position.z, 0, trans.position.z - 25.5f);
+                if (other.transform.position.z > trans.position.z) // player is north of door
+                {
+                    centerOfRoom = new Vector3(trans.position.x, 0, trans.position.z - 25.5f);
+                }
+                else if (other.transform.position.z < trans.position.z) // player is south of door
+                {
+                    centerOfRoom = new Vector3(trans.position.x, 0, trans.position.z + 25.5f);
+                }
             }
-            else if (other.transform.position.z < trans.position.z) // player is south of door
+            else
             {
-                centerOfRoom = new Vector3(trans.position.z, 0, trans.position.z + 25.5f);
+                if (other.transform.position.x > trans.position.x) // player is right of door
+                {
+                    centerOfRoom = new Vector3(trans.position.x - 25.5f, 0, trans.position.z);
+                }
+                else if (other.transform.position.x < trans.position.x) // player is left of door
+                {
+                    centerOfRoom = new Vector3(trans.position.x + 25.5f, 0, trans.position.z);
+                }
             }
+
 
             pickMonster(randomPos(centerOfRoom));
             pickMonster(randomPos(centerOfRoom));
@@ -101,7 +111,7 @@ public class MonsterDoor : MonoBehaviour {
             pickProp(randomPos(centerOfRoom));
             pickProp(randomPos(centerOfRoom));
 
-
+            Destroy(gameObject);
 
 
         }
