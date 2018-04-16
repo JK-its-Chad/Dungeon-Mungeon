@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterDoor : MonoBehaviour {
+public class MonsterDoor : Door {
    
     // HEY
     // SPAWN ME 25.5 AWAY

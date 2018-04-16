@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject Room;
     public GameObject KeyRoom;
     public GameObject ExtraRoom;
-    public GameObject Door;
+    public GameObject Door, FinalDoor;
     public int Seed = 0;
 
     private GameObject[] KeyPath;
@@ -25,6 +25,7 @@ public class MapGenerator : MonoBehaviour
         PlaceKeyRooms();
         PlaceExtraRooms();
         CreateRooms();
+        CreateDoors();
 
         GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
     }
@@ -35,7 +36,7 @@ public class MapGenerator : MonoBehaviour
         bool successful;
         int count = 0;
 
-        for (int i = 0; i < KeyRooms && count < 500; )
+        for (int i = 0; i < KeyRooms && count < 500;)
         {
             count++;
             if (count > 495) Debug.Log("Break Infinite Loop -Key");
@@ -169,7 +170,6 @@ public class MapGenerator : MonoBehaviour
                     }
                 }
 
-                Debug.Log(ClosestRooms.Count);
                 GameObject NewRoom = Instantiate(ExtraRoom, KeyVector, Quaternion.identity);
                 NewRoom.GetComponent<Room>().KeyAccess = Random.Range(0, KeyRooms);
                 LinkRooms(LastRoom, NewRoom, NewRoom.GetComponent<Room>().KeyAccess);
@@ -297,7 +297,7 @@ public class MapGenerator : MonoBehaviour
             }
             path[i + 1] = currentGO;
         }
-        if(Draw)drawPath(path);
+        if (Draw) drawPath(path);
     }
 
     private int getDistance(Vector3 Position, Vector3 Target)
@@ -339,7 +339,7 @@ public class MapGenerator : MonoBehaviour
         {
             if (door.transform.position.x == DoorVector.x && door.transform.position.z == DoorVector.z)
             {
-                if(FirstRoom.transform.position.x < SecondRoom.transform.position.x)
+                if (FirstRoom.transform.position.x < SecondRoom.transform.position.x)
                 {
                     FirstRoom.GetComponent<Room>().EastDoor = door;
                     SecondRoom.GetComponent<Room>().WestDoor = door;
@@ -362,8 +362,11 @@ public class MapGenerator : MonoBehaviour
                 return door;
             }
         }
-        
+
         GameObject newDoor = Instantiate(Door, DoorVector, Quaternion.identity);
+
+        newDoor.GetComponent<Door>().FirstRoom = FirstRoom;
+        newDoor.GetComponent<Door>().SecondRoom = SecondRoom;
 
         if (FirstRoom.transform.position.x < SecondRoom.transform.position.x)
         {
@@ -442,12 +445,117 @@ public class MapGenerator : MonoBehaviour
     {
         GameObject[] Rooms = GameObject.FindGameObjectsWithTag("Room");
         RoomSelectorScript RoomChanger = GameObject.Find("RoomSelector").GetComponent<RoomSelectorScript>();
-        foreach(GameObject room in Rooms)
+        foreach (GameObject room in Rooms)
         {
-            Instantiate(RoomChanger.PickRoom(room.GetComponent<Room>()),
+            GameObject SpawnedRoom = Instantiate(RoomChanger.PickRoom(room.GetComponent<Room>()),
                         room.transform.position,
                         Quaternion.identity);
+            Room oldRoom = room.GetComponent<Room>();
+            Room newRoom = SpawnedRoom.GetComponent<Room>();
+
+            newRoom.NorthDoor = oldRoom.NorthDoor;
+            newRoom.SouthDoor = oldRoom.SouthDoor;
+            newRoom.WestDoor = oldRoom.WestDoor;
+            newRoom.EastDoor = oldRoom.EastDoor;
+
+            newRoom.NorthRoom = oldRoom.NorthRoom;
+            newRoom.SouthRoom = oldRoom.SouthRoom;
+            newRoom.WestRoom = oldRoom.WestRoom;
+            newRoom.EastRoom = oldRoom.EastRoom;
+
             Destroy(room);
         }
+        Rooms = GameObject.FindGameObjectsWithTag("Final Room");
+        foreach (GameObject room in Rooms)
+        {
+            Room oldRoom = room.GetComponent<Room>();
+            if (oldRoom.NorthRoom)
+            {
+                foreach (GameObject otherroom in Rooms)
+                {
+                    if (otherroom.transform.position.z == room.transform.position.z + 51 && otherroom.transform.position.x == room.transform.position.x)
+                    {
+                        oldRoom.NorthRoom = otherroom;
+                    }
+                }
+            }
+            if (oldRoom.SouthRoom)
+            {
+                foreach (GameObject otherroom in Rooms)
+                {
+                    if (otherroom.transform.position.z == room.transform.position.z - 51 && otherroom.transform.position.x == room.transform.position.x)
+                    {
+                        oldRoom.SouthRoom = otherroom;
+                        break;
+                    }
+                }
+            }
+            if (oldRoom.EastRoom)
+            {
+                foreach (GameObject otherroom in Rooms)
+                {
+                    if (otherroom.transform.position.x == room.transform.position.x + 51 && otherroom.transform.position.z == room.transform.position.z)
+                    {
+                        oldRoom.EastRoom = otherroom;
+                    }
+                }
+            }
+            if (oldRoom.WestRoom)
+            {
+                foreach (GameObject otherroom in Rooms)
+                {
+                    if (otherroom.transform.position.x == room.transform.position.x - 51 && otherroom.transform.position.z == room.transform.position.z)
+                    {
+                        oldRoom.WestRoom = otherroom;
+                    }
+                }
+            }
+        }
+        foreach (GameObject room in Rooms)
+        {
+            Room oldRoom = room.GetComponent<Room>();
+            if (oldRoom.NorthDoor)
+            {
+                oldRoom.NorthDoor.GetComponent<Door>().FirstRoom = room;
+            }
+            if (oldRoom.SouthDoor)
+            {
+                oldRoom.SouthDoor.GetComponent<Door>().SecondRoom = room;
+            }
+            if (oldRoom.EastDoor)
+            {
+                oldRoom.EastDoor.GetComponent<Door>().FirstRoom = room;
+            }
+            if (oldRoom.WestDoor)
+            {
+                oldRoom.WestDoor.GetComponent<Door>().SecondRoom = room;
+            }
+        }
+    }
+
+    private void CreateDoors()
+    {
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+        foreach(GameObject door in doors)
+        {
+            if(door.GetComponent<Door>().SecondRoom.transform.position.z > door.GetComponent<Door>().FirstRoom.transform.position.z)
+            {
+                Instantiate(FinalDoor, door.transform.position, Quaternion.identity);
+            }
+            if (door.GetComponent<Door>().FirstRoom.transform.position.x < door.GetComponent<Door>().SecondRoom.transform.position.x)
+            {
+                Instantiate(FinalDoor, door.transform.position, Quaternion.Euler(0, 90, 0));
+            }
+        }
+    }
+
+    private GameObject findRoom(Vector3 OldRoom)
+    {
+        GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
+        foreach (GameObject room in rooms)
+        {
+            if (room.transform.position == OldRoom) return room;
+        }
+        return null;
     }
 }
