@@ -447,9 +447,19 @@ public class MapGenerator : MonoBehaviour
         RoomSelectorScript RoomChanger = GameObject.Find("RoomSelector").GetComponent<RoomSelectorScript>();
         foreach (GameObject room in Rooms)
         {
-            GameObject SpawnedRoom = Instantiate(RoomChanger.PickRoom(room.GetComponent<Room>()),
-                        room.transform.position,
-                        Quaternion.identity);
+            GameObject SpawnedRoom;
+            if (room.GetComponent<KeyRoom>())
+            {
+                SpawnedRoom  = Instantiate(RoomChanger.PickKeyRoom(room.GetComponent<KeyRoom>()),
+                     room.transform.position,
+                     Quaternion.identity);
+            }
+            else
+            {
+                SpawnedRoom = Instantiate(RoomChanger.PickRoom(room.GetComponent<Room>()),
+                     room.transform.position,
+                     Quaternion.identity);
+            }
             Room oldRoom = room.GetComponent<Room>();
             Room newRoom = SpawnedRoom.GetComponent<Room>();
 

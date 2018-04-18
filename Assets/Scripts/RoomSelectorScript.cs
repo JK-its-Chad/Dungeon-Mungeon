@@ -7,10 +7,10 @@ public class RoomSelectorScript : MonoBehaviour
 
     public GameObject U, D, L, R,
                       UD, RL, UR, UL, DR, DL,
-                      ULD, URL, DRU, DLR, UDLR;
-
-    public GameObject bossU, bossL, bossR, bossD;
-    public GameObject itemU, itemL, itemR, itemD;
+                      ULD, URL, DRU, DLR, UDLR,
+                      KU, KD, KL, KR,
+                      KUD, KRL, KUR, KUL, KDR, KDL,
+                      KULD, KURL, KDRU, KDLR, KUDLR;
 
     public int type; // 0 = normal, 1 = start
 
@@ -103,43 +103,113 @@ public class RoomSelectorScript : MonoBehaviour
             roomSpawn = L;
         }
 
-        if (type == 2)
+        if (roomSpawn == null)
         {
-            if (room.NorthDoor)
-            {
-                roomSpawn = bossU;
-            }
+            print("HUGE PROBLEM");
+        }
+
+        Room newRoom = roomSpawn.GetComponent<Room>();
+
+        newRoom.KeyAccess = room.KeyAccess;
+
+        newRoom.NorthDoor = room.NorthDoor;
+        newRoom.SouthDoor = room.SouthDoor;
+        newRoom.WestDoor = room.WestDoor;
+        newRoom.EastDoor = room.EastDoor;
+
+        newRoom.NorthRoom = room.NorthRoom;
+        newRoom.SouthRoom = room.SouthRoom;
+        newRoom.WestRoom = room.WestRoom;
+        newRoom.EastRoom = room.EastRoom;
+
+        return roomSpawn;
+    }
+
+    public GameObject PickKeyRoom(KeyRoom room)
+    {
+        if (room.NorthDoor)
+        {
             if (room.SouthDoor)
             {
-                roomSpawn = bossD;
+                if (room.EastDoor)
+                {
+                    if (room.WestDoor)
+                    {
+                        roomSpawn = KUDLR;
+                    }
+                    else
+                    {
+                        roomSpawn = KDRU;
+                    }
+                }
+                else if (room.WestDoor)
+                {
+                    roomSpawn = KULD;
+                }
+                else
+                {
+                    roomSpawn = KUD;
+                }
             }
-            if (room.WestDoor)
+            else
             {
-                roomSpawn = bossL;
-            }
-            if (room.EastDoor)
-            {
-                roomSpawn = bossR;
+                if (room.EastDoor)
+                {
+                    if (room.WestDoor)
+                    {
+                        roomSpawn = KURL;
+                    }
+                    else
+                    {
+                        roomSpawn = KUR;
+                    }
+                }
+                else if (room.WestDoor)
+                {
+                    roomSpawn = KUL;
+                }
+                else
+                {
+                    roomSpawn = KU;
+                }
             }
         }
-        if (type == 3)
+        else if (room.SouthDoor)
         {
-            if (room.NorthDoor)
-            {
-                roomSpawn = itemU;
-            }
-            if (room.SouthDoor)
-            {
-                roomSpawn = itemD;
-            }
-            if (room.WestDoor)
-            {
-                roomSpawn = itemL;
-            }
             if (room.EastDoor)
             {
-                roomSpawn = itemR;
+                if (room.WestDoor)
+                {
+                    roomSpawn = KDLR;
+                }
+                else
+                {
+                    roomSpawn = KDR;
+                }
             }
+            else if (room.WestDoor)
+            {
+                roomSpawn = KDL;
+            }
+            else
+            {
+                roomSpawn = KD;
+            }
+        }
+        else if (room.EastDoor)
+        {
+            if (room.WestDoor)
+            {
+                roomSpawn = KRL;
+            }
+            else
+            {
+                roomSpawn = KR;
+            }
+        }
+        else if (room.WestDoor)
+        {
+            roomSpawn = KL;
         }
 
         if (roomSpawn == null)
@@ -147,7 +217,10 @@ public class RoomSelectorScript : MonoBehaviour
             print("HUGE PROBLEM");
         }
 
-        Room newRoom = roomSpawn.GetComponent<Room>();
+        KeyRoom newRoom = roomSpawn.GetComponent<KeyRoom>();
+
+        newRoom.KeyAccess = room.KeyAccess;
+        newRoom.KeyNumber = room.KeyNumber;
 
         newRoom.NorthDoor = room.NorthDoor;
         newRoom.SouthDoor = room.SouthDoor;
