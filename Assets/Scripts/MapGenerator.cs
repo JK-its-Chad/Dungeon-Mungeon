@@ -550,11 +550,17 @@ public class MapGenerator : MonoBehaviour
         {
             if(door.GetComponent<Door>().SecondRoom.transform.position.z > door.GetComponent<Door>().FirstRoom.transform.position.z)
             {
-                Instantiate(FinalDoor, door.transform.position, Quaternion.identity);
+                GameObject newDoor = Instantiate(FinalDoor, door.transform.position, Quaternion.identity);
+                newDoor.GetComponent<Door>().KeyAccess = door.GetComponent<Door>().KeyAccess;
+                newDoor.GetComponent<Door>().FirstRoom = door.GetComponent<Door>().FirstRoom;
+                newDoor.GetComponent<Door>().SecondRoom = door.GetComponent<Door>().SecondRoom;
             }
             if (door.GetComponent<Door>().FirstRoom.transform.position.x < door.GetComponent<Door>().SecondRoom.transform.position.x)
             {
-                Instantiate(FinalDoor, door.transform.position, Quaternion.Euler(0, 90, 0));
+                GameObject newDoor = Instantiate(FinalDoor, door.transform.position, Quaternion.Euler(0, 90, 0));
+                newDoor.GetComponent<Door>().KeyAccess = door.GetComponent<Door>().KeyAccess;
+                newDoor.GetComponent<Door>().FirstRoom = door.GetComponent<Door>().FirstRoom;
+                newDoor.GetComponent<Door>().SecondRoom = door.GetComponent<Door>().SecondRoom;
             }
         }
     }
