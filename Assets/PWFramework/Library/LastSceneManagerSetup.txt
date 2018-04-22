@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/PWGame/TestScenes/Input2Console.unity
+  isLoaded: 1
+  isActive: 1
