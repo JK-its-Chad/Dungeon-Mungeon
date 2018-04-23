@@ -10,14 +10,19 @@ public class PWPawn : Pawn {
     public float Energy = 100.0f;
     public float Shields = 100.0f;
 
+    public virtual void Move(float value, float z)
+    {
+
+    }
+
     public virtual void Horizontal(float value)
     {
-       
+
     }
 
     public virtual void Vertical(float value)
     {
-       
+
     }
 
     public virtual void MouseX(float value)

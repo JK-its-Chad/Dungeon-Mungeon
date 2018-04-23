@@ -6,10 +6,15 @@ public class PlayerPawn : PWPawn
 {
 
     Rigidbody rb;
-    public float MoveSpeed = 10f;
+    public float MoveSpeed = 15f;
     public float RotateSpeed = 180f;
+<<<<<<< HEAD
+    public float MinVelocity = .5f;
+    public float MaxVelocity = 20f;
+=======
     public float MinVelocity = .01f;
     public int Key = 0;
+>>>>>>> 8861145e8f8059c673b847ea147e5b84aedae09d
 
     public Transform ProjectileSpawn;
     public GameObject Projectile1, Projectile2, Camera;
@@ -64,25 +69,20 @@ public class PlayerPawn : PWPawn
     {
         if (value != 0)
         {
-                Vector3 newVelocity = rb.velocity;
-                newVelocity.x += gameObject.transform.right.x * value;
-                newVelocity.z += gameObject.transform.right.z * value;
-                newVelocity.Normalize();
-                rb.velocity = newVelocity * MoveSpeed;
+            Vector3 NewVector = new Vector3(0,0,0);
+            NewVector.z = gameObject.transform.right.z + gameObject.transform.forward.z;
+            NewVector.x = gameObject.transform.right.x + gameObject.transform.forward.x;
+            rb.velocity = NewVector * MoveSpeed;
         }
     }
-
     public override void Vertical(float value)
     {
         if (value != 0)
         {
-            Vector3 newVelocity = rb.velocity;
-            newVelocity.x += gameObject.transform.forward.x * value;
-            newVelocity.z += gameObject.transform.forward.z * value;
-            newVelocity.Normalize();
-            rb.velocity = newVelocity * MoveSpeed;
+
         }
     }
+
 
     public override void MouseX(float value)
     {
