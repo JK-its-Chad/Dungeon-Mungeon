@@ -63,23 +63,16 @@ public class PWCarPawn : PWPawn {
     {
         if (value != 0)
         {
-            Vector3 direction = new Vector3(0, 0, 0);
-            direction.z = rb.velocity.z;
-            direction.x = value;
-            direction.Normalize();
-            rb.velocity = direction * MoveSpeed;
+            //LOG("Pawn-Horizontal (" + value + ")");
+            gameObject.transform.Rotate(0, ( RotateSpeed * value * Time.fixedDeltaTime),0); 
         }
     }
 
     public override void Vertical(float value)
     {
         if (value != 0)
-        {
-            Vector3 direction = new Vector3(0, 0, 0);
-            direction.x = rb.velocity.x;
-            direction.z = value;
-            direction.Normalize();
-            rb.velocity = direction * MoveSpeed;
+        { 
+            rb.velocity = gameObject.transform.forward * MoveSpeed * value;
         }
     }
 

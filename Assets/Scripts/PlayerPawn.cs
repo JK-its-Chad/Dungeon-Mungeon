@@ -9,6 +9,7 @@ public class PlayerPawn : PWPawn
     public float MoveSpeed = 10f;
     public float RotateSpeed = 180f;
     public float MinVelocity = .01f;
+    public int Key = 0;
 
     public Transform ProjectileSpawn;
     public GameObject Projectile1, Projectile2, Camera;
