@@ -31,12 +31,21 @@ public class MonsterDoor : Door {
         {
             Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
 
-            pickMonster(randomPos(centerOfRoom));
-            pickMonster(randomPos(centerOfRoom));
-            pickMonster(randomPos(centerOfRoom));
+            if(Arch.SecondRoom.GetComponent<KeyRoom>())
+            {
+                GameObject MiniBoss = pickMonster(randomPos(centerOfRoom));
+                MiniBoss.transform.localScale = MiniBoss.transform.localScale * 3;
+                MiniBoss.transform.position = new Vector3(centerOfRoom.x, 5, centerOfRoom.z);
+            }
+            else
+            {
+                pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
 
-            pickProp(randomPos(centerOfRoom));
-            pickProp(randomPos(centerOfRoom));
+                pickProp(randomPos(centerOfRoom));
+                pickProp(randomPos(centerOfRoom));
+            }
 
             Destroy(gameObject);
         }
@@ -44,12 +53,21 @@ public class MonsterDoor : Door {
         {
             Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
 
-            pickMonster(randomPos(centerOfRoom));
-            pickMonster(randomPos(centerOfRoom));
-            pickMonster(randomPos(centerOfRoom));
+            if (Arch.FirstRoom.GetComponent<KeyRoom>())
+            {
+                GameObject MiniBoss = pickMonster(randomPos(centerOfRoom));
+                MiniBoss.transform.localScale = MiniBoss.transform.localScale * 3;
+                MiniBoss.transform.position = new Vector3(centerOfRoom.x, 5, centerOfRoom.z);
+            }
+            else
+            {
+                pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
 
-            pickProp(randomPos(centerOfRoom));
-            pickProp(randomPos(centerOfRoom));
+                pickProp(randomPos(centerOfRoom));
+                pickProp(randomPos(centerOfRoom));
+            }
 
             Destroy(gameObject);
         }
@@ -71,7 +89,7 @@ public class MonsterDoor : Door {
         }
         Instantiate(item, pos, faceDoor);
     }
-    void pickMonster(Vector3 pos)
+    GameObject pickMonster(Vector3 pos)
     {
         switch (rollDice(4))
         {
@@ -88,7 +106,7 @@ public class MonsterDoor : Door {
                 monster = skeleton;
                 break;
         }
-        Instantiate(monster, pos, faceDoor);
+        return Instantiate(monster, pos, faceDoor);
     }
 
     int rollDice(int options)
