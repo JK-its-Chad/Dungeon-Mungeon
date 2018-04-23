@@ -8,8 +8,13 @@ public class PlayerPawn : PWPawn
     Rigidbody rb;
     public float MoveSpeed = 15f;
     public float RotateSpeed = 180f;
+<<<<<<< HEAD
     public float MinVelocity = .5f;
     public float MaxVelocity = 20f;
+=======
+    public float MinVelocity = .01f;
+    public int Key = 0;
+>>>>>>> 8861145e8f8059c673b847ea147e5b84aedae09d
 
     public Transform ProjectileSpawn;
     public GameObject Projectile1, Projectile2, Camera;
