@@ -20,6 +20,16 @@ public class PWPawn : Pawn {
        
     }
 
+    public virtual void MouseX(float value)
+    {
+
+    }
+
+    public virtual void MouseY(float value)
+    {
+
+    }
+
     public virtual void Fire1(bool value)
     {
        

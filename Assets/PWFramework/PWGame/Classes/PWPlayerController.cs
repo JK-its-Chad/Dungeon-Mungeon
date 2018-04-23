@@ -84,6 +84,25 @@ public class PWPlayerController : PlayerController {
         }
     }
 
+    public override void MouseX(float value)
+    {
+        PWPawn CP = (PWPawn)PossesedPawn;
+        if (CP)
+        {
+            CP.MouseX(value);
+        }
+    }
+
+    public override void MouseY(float value)
+    {
+        //LOG(GetPossesedPawn().ToString()); 
+        PWPawn CP = (PWPawn)PossesedPawn;
+        if (CP)
+        {
+            CP.MouseY(value);
+        }
+    }
+
     public override void Fire1(bool value)
     {
         PWPawn CP = (PWPawn)PossesedPawn;

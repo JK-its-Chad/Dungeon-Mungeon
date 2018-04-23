@@ -120,6 +120,8 @@ public class PlayerController : Controller
     {
         AddAxis("Horizontal", Horizontal);
         AddAxis("Vertical", Vertical);
+        AddAxis("Mouse X", MouseX);
+        AddAxis("Mouse Y", MouseY);
         AddButton("Fire1", Fire1);
         AddButton("Fire2", Fire2);
         AddButton("Fire3", Fire3);
@@ -140,6 +142,22 @@ public class PlayerController : Controller
         {
             LOG("Del-Vertical (" + value +")");
         }       
+    }
+
+    public virtual void MouseX(float value)
+    {
+        if (value != 0)
+        {
+            LOG("MouseX (" + value + ")");
+        }
+    }
+
+    public virtual void MouseY(float value)
+    {
+        if (value != 0)
+        {
+            LOG("MouseY (" + value + ")");
+        }
     }
 
     public virtual void Fire1(bool value)

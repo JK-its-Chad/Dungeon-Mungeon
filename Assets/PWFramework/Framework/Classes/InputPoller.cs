@@ -74,6 +74,8 @@ public class InputPoller : Info {
         InputState IS = InputState.GetBlankState();
         IS.AddAxis("Horizontal", Input.GetAxis("Horizontal"));
         IS.AddAxis("Vertical", Input.GetAxis("Vertical"));
+        IS.AddAxis("Mouse X", Input.GetAxis("Mouse X"));
+        IS.AddAxis("Mouse Y", Input.GetAxis("Mouse Y"));
         IS.AddButton("Fire1", Input.GetButton("Fire1"));
         IS.AddButton("Fire2", Input.GetButton("Fire2"));
         IS.AddButton("Fire3", Input.GetButton("Fire3"));
