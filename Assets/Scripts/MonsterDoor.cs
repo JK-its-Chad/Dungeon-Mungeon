@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterDoor : Door {
-   
+
     // HEY
     // SPAWN ME 25.5 AWAY
     // ROTATE ME 90 IF IM LEFT OR RIGHT
-
+    public DoorCollider Side1, Side2;
     public GameObject golem, knight, lizard, skeleton;
     public GameObject barrel, spikes, rocks;
+    public Door Arch;
 
     GameObject item;
     GameObject monster;
@@ -22,6 +23,59 @@ public class MonsterDoor : Door {
     {
         trans = GetComponent<Transform>();
 	}
+
+    private void Update()
+    {
+        if (Side1.doorCollision.tag == "Player" && Side1.doorCollision.GetComponent<PlayerPawn>().Key >= Arch.KeyAccess)
+        {
+            if (Arch.SecondRoom.GetComponent<KeyRoom>())
+            {
+                Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
+                GameObject MiniBoss = pickMonster(randomPos(centerOfRoom));
+                MiniBoss.transform.localScale = MiniBoss.transform.localScale * 3;
+                MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, 6, Arch.SecondRoom.transform.position.z);
+            }
+            else
+            {
+                Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
+
+                //pickMonster(randomPos(centerOfRoom));
+                //pickMonster(randomPos(centerOfRoom));
+                //pickMonster(randomPos(centerOfRoom));
+
+
+                pickProp(randomPos(centerOfRoom));
+                pickProp(randomPos(centerOfRoom));
+            }
+           
+            Destroy(gameObject);
+        }
+        if (Side2.doorCollision.tag == "Player" && Side2.doorCollision.GetComponent<PlayerPawn>().Key >= Arch.KeyAccess)
+        {
+           
+            if (Arch.FirstRoom.GetComponent<KeyRoom>())
+            {
+                Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
+                GameObject MiniBoss = pickMonster(randomPos(centerOfRoom));
+                MiniBoss.transform.localScale = MiniBoss.transform.localScale * 3;
+                MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, 6, Arch.FirstRoom.transform.position.z);
+            }
+            else
+            {
+                Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
+
+                //pickMonster(randomPos(centerOfRoom));
+                //pickMonster(randomPos(centerOfRoom));
+                //pickMonster(randomPos(centerOfRoom));
+
+
+                pickProp(randomPos(centerOfRoom));
+                pickProp(randomPos(centerOfRoom));
+            }
+
+            Destroy(gameObject);
+        }
+    }
 
     void pickProp(Vector3 pos)
     {
@@ -39,7 +93,7 @@ public class MonsterDoor : Door {
         }
         Instantiate(item, pos, faceDoor);
     }
-    void pickMonster(Vector3 pos)
+    GameObject pickMonster(Vector3 pos)
     {
         switch (rollDice(4))
         {
@@ -56,7 +110,7 @@ public class MonsterDoor : Door {
                 monster = skeleton;
                 break;
         }
-        Instantiate(monster, pos, faceDoor);
+        return Instantiate(monster, pos, faceDoor);
     }
 
     int rollDice(int options)
@@ -72,48 +126,5 @@ public class MonsterDoor : Door {
         position.z += Random.Range(-20, 20);
 
         return position;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player")
-        {
-            Vector3 centerOfRoom = Vector3.zero;
-            if (trans.rotation.y == 0)
-            {
-                if (other.transform.position.z > trans.position.z) // player is north of door
-                {
-                    centerOfRoom = new Vector3(trans.position.x, 0, trans.position.z - 25.5f);
-                }
-                else if (other.transform.position.z < trans.position.z) // player is south of door
-                {
-                    centerOfRoom = new Vector3(trans.position.x, 0, trans.position.z + 25.5f);
-                }
-            }
-            else
-            {
-                if (other.transform.position.x > trans.position.x) // player is right of door
-                {
-                    centerOfRoom = new Vector3(trans.position.x - 25.5f, 0, trans.position.z);
-                }
-                else if (other.transform.position.x < trans.position.x) // player is left of door
-                {
-                    centerOfRoom = new Vector3(trans.position.x + 25.5f, 0, trans.position.z);
-                }
-            }
-
-
-            pickMonster(randomPos(centerOfRoom));
-            pickMonster(randomPos(centerOfRoom));
-            pickMonster(randomPos(centerOfRoom));
-
-
-            pickProp(randomPos(centerOfRoom));
-            pickProp(randomPos(centerOfRoom));
-
-            Destroy(gameObject);
-
-
-        }
     }
 }

@@ -62,6 +62,8 @@ public class PlayerPawn : PWPawn
         if (rb.velocity.magnitude < MinVelocity)
         {
             rb.velocity = Vector3.zero;
+            xVelocity = 0;
+            zVelocity = 0;
         }
     }
 
