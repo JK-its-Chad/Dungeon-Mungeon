@@ -8,7 +8,7 @@ public class MonsterDoor : Door {
     // SPAWN ME 25.5 AWAY
     // ROTATE ME 90 IF IM LEFT OR RIGHT
     public DoorCollider Side1, Side2;
-    public GameObject golem, knight, lizard, skeleton;
+    public GameObject golem, knight, lizard, skeleton, Turret;
     public GameObject barrel, spikes, rocks;
     public Door Arch;
 
@@ -31,9 +31,8 @@ public class MonsterDoor : Door {
             if (Arch.SecondRoom.GetComponent<KeyRoom>())
             {
                 Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
-                GameObject MiniBoss = pickMonster(randomPos(centerOfRoom));
-                MiniBoss.transform.localScale = MiniBoss.transform.localScale * 3;
-                MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, 6, Arch.SecondRoom.transform.position.z);
+                GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
             }
             else
             {
@@ -56,9 +55,8 @@ public class MonsterDoor : Door {
             if (Arch.FirstRoom.GetComponent<KeyRoom>())
             {
                 Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
-                GameObject MiniBoss = pickMonster(randomPos(centerOfRoom));
-                MiniBoss.transform.localScale = MiniBoss.transform.localScale * 3;
-                MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, 6, Arch.FirstRoom.transform.position.z);
+                GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
             }
             else
             {
