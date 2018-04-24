@@ -8,13 +8,13 @@ public class PlayerPawn : PWPawn
     Rigidbody rb;
     public float MoveSpeed = 15f;
     public float RotateSpeed = 180f;
-<<<<<<< HEAD
     public float MinVelocity = .5f;
     public float MaxVelocity = 20f;
-=======
-    public float MinVelocity = .01f;
+
+    private float xVelocity;
+    private float zVelocity;
+
     public int Key = 0;
->>>>>>> 8861145e8f8059c673b847ea147e5b84aedae09d
 
     public Transform ProjectileSpawn;
     public GameObject Projectile1, Projectile2, Camera;
@@ -65,22 +65,36 @@ public class PlayerPawn : PWPawn
         }
     }
 
+    private void Move(float x, float z)
+    {
+        if(x != 0 || z !=0)
+        {
+           
+            Vector3 Direction = new Vector3(0, 0, 0);
+            Direction.x = (gameObject.transform.right.x * x) + (gameObject.transform.forward.x * z);
+            Direction.z = (gameObject.transform.right.z * x) + (gameObject.transform.forward.z * z);
+            rb.velocity = Direction * MoveSpeed;
+            Debug.Log(Direction * MoveSpeed);
+        }
+    }
+
     public override void Horizontal(float value)
     {
         if (value != 0)
         {
-            Vector3 NewVector = new Vector3(0,0,0);
-            NewVector.z = gameObject.transform.right.z + gameObject.transform.forward.z;
-            NewVector.x = gameObject.transform.right.x + gameObject.transform.forward.x;
-            rb.velocity = NewVector * MoveSpeed;
+            xVelocity = value;
+            Move(xVelocity, zVelocity);
         }
+        else xVelocity = 0;
     }
     public override void Vertical(float value)
     {
         if (value != 0)
         {
-
+            zVelocity = value;
+            Move(xVelocity, zVelocity);
         }
+        else zVelocity = 0;
     }
 
 
