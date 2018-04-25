@@ -28,6 +28,7 @@ public class PlayerPawn : PWPawn
         // Add and Set up Rigid Body
         rb = gameObject.AddComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.drag = 10f;
 
 
         Energy = StartingEnergy;
