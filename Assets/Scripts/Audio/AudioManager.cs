@@ -5,12 +5,6 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
     
-    public AudioSource track;
-    public bool Musicstatus;
-    public GameObject player;
-    public GameObject target;
-    public float trackdistance;
-    public float Modifysound;
    
 
     public Sound[] sounds;
@@ -47,17 +41,11 @@ public class AudioManager : MonoBehaviour {
    
     void Start()
     {
-        play("start");
+        play("MainMenuMusic");
     }
 
     
-    void Update()
-    {
-        if(Musicstatus)
-        {
-            track.volume = DistancefromTarget(trackdistance) - Modifysound;
-        }
-    }
+    
     
 
     
@@ -73,13 +61,4 @@ public class AudioManager : MonoBehaviour {
     }
 
    
-    float DistancefromTarget(float Maxdistance)
-    {
-        float d = Vector3.Distance(player.transform.position, target.transform.position);
-        float distanceClamped = Mathf.Clamp(d, 0, Maxdistance);
-        float audiodistance = distanceClamped / Maxdistance;
-        audiodistance = 1 - audiodistance;
-        return audiodistance;
-    }
-    
 }
