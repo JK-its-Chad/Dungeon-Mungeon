@@ -15,6 +15,7 @@ public class PWInputPoller : InputPoller {
         IS.AddAxis("Vertical", Input.GetAxis("Vertical"));
         IS.AddAxis("Mouse X", Input.GetAxis("Mouse X"));
         IS.AddAxis("Mouse Y", Input.GetAxis("Mouse Y"));
+        IS.AddAxis("Trigger1", Input.GetAxis("Trigger1"));
         IS.AddButton("Fire1", Input.GetButtonDown("Fire1"));
         IS.AddButton("Fire2", Input.GetButtonDown("Fire2"));
         IS.AddButton("Fire3", Input.GetButtonDown("Fire3"));
