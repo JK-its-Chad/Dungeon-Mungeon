@@ -28,6 +28,7 @@ public class PlayerPawn : PWPawn
         // Add and Set up Rigid Body
         rb = gameObject.AddComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.drag = 10f;
 
 
         Energy = StartingEnergy;
@@ -67,7 +68,7 @@ public class PlayerPawn : PWPawn
         }
     }
 
-    private void Move(float x, float z)
+    public override void Move(float x, float z)
     {
         if(x != 0 || z !=0)
         {
@@ -76,7 +77,6 @@ public class PlayerPawn : PWPawn
             Direction.x = (gameObject.transform.right.x * x) + (gameObject.transform.forward.x * z);
             Direction.z = (gameObject.transform.right.z * x) + (gameObject.transform.forward.z * z);
             rb.velocity = Direction * MoveSpeed;
-            Debug.Log(Direction * MoveSpeed);
         }
     }
 
