@@ -8,11 +8,12 @@ public class PlayerPawn : PWPawn
     Rigidbody rb;
     public float MoveSpeed = 15f;
     public float RotateSpeed = 180f;
-    public float MinVelocity = .5f;
+    public float MinVelocity = 4f;
     public float MaxVelocity = 20f;
 
     private float xVelocity;
     private float zVelocity;
+    private Vector3 NewVelocity = Vector3.zero;
 
     public int Key = 0;
 
@@ -28,6 +29,7 @@ public class PlayerPawn : PWPawn
         // Add and Set up Rigid Body
         rb = gameObject.AddComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.drag = 10f;
 
 
         Energy = StartingEnergy;
@@ -65,18 +67,23 @@ public class PlayerPawn : PWPawn
             xVelocity = 0;
             zVelocity = 0;
         }
+        //Move(xVelocity, zVelocity);
     }
 
-    private void Move(float x, float z)
+    public override void Move(float x, float z)
     {
         if(x != 0 || z !=0)
         {
-           
             Vector3 Direction = new Vector3(0, 0, 0);
             Direction.x = (gameObject.transform.right.x * x) + (gameObject.transform.forward.x * z);
             Direction.z = (gameObject.transform.right.z * x) + (gameObject.transform.forward.z * z);
             rb.velocity = Direction * MoveSpeed;
             Debug.Log(Direction * MoveSpeed);
+        }
+        else
+        {
+            xVelocity = 0;
+            zVelocity = 0;
         }
     }
 
@@ -87,7 +94,7 @@ public class PlayerPawn : PWPawn
             xVelocity = value;
             Move(xVelocity, zVelocity);
         }
-        else xVelocity = 0;
+
     }
     public override void Vertical(float value)
     {
@@ -96,7 +103,6 @@ public class PlayerPawn : PWPawn
             zVelocity = value;
             Move(xVelocity, zVelocity);
         }
-        else zVelocity = 0;
     }
 
 
