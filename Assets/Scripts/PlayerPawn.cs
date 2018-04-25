@@ -15,6 +15,18 @@ public class PlayerPawn : PWPawn
     private float zVelocity;
     private Vector3 NewVelocity = Vector3.zero;
 
+    private float minimumX = -360F;
+    private float maximumX = 360F;
+    private float minimumY = -60F;
+    private float maximumY = 60F;
+    private float rotationX = 0f;
+    private float rotationY = 0f;
+    public float sensitivityX = 3f;
+    public float sensitivityY = 3f;
+    private Quaternion originalRotation;
+    private Quaternion xQuaternion;
+    private Quaternion yQuaternion;
+
     public int Key = 0;
 
     public Transform ProjectileSpawn;
@@ -30,6 +42,9 @@ public class PlayerPawn : PWPawn
         rb = gameObject.AddComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.drag = 10f;
+        originalRotation = transform.localRotation;
+        xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
+        yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.up); ;
 
 
         Energy = StartingEnergy;
@@ -67,7 +82,19 @@ public class PlayerPawn : PWPawn
             xVelocity = 0;
             zVelocity = 0;
         }
-        //Move(xVelocity, zVelocity);
+    }
+
+    public static float ClampAngle(float angle, float min, float max)
+    {
+        if (angle <= -360F)
+        {
+            angle += 360F;
+        }
+        if (angle >= 360F)
+        {
+            angle -= 360F;
+        }
+        return Mathf.Clamp(angle, min, max);
     }
 
     public override void Move(float x, float z)
@@ -78,12 +105,6 @@ public class PlayerPawn : PWPawn
             Direction.x = (gameObject.transform.right.x * x) + (gameObject.transform.forward.x * z);
             Direction.z = (gameObject.transform.right.z * x) + (gameObject.transform.forward.z * z);
             rb.velocity = Direction * MoveSpeed;
-            Debug.Log(Direction * MoveSpeed);
-        }
-        else
-        {
-            xVelocity = 0;
-            zVelocity = 0;
         }
     }
 
@@ -110,7 +131,11 @@ public class PlayerPawn : PWPawn
     {
         if (value != 0)
         {
-            transform.eulerAngles += new Vector3(0, value * 4, 0);
+            //transform.eulerAngles += new Vector3(0, value * 4, 0);
+            rotationX += value * sensitivityX;
+            rotationX = ClampAngle(rotationX, minimumX, maximumX);
+            xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
+            transform.localRotation = originalRotation * xQuaternion * yQuaternion;
         }
     }
 
@@ -118,7 +143,11 @@ public class PlayerPawn : PWPawn
     {
         if (value != 0)
         {
-            Camera.transform.eulerAngles += new Vector3(-value * 4, 0, 0);
+            //Camera.transform.eulerAngles += new Vector3(-value * 4, 0, 0);
+            rotationY += value * sensitivityY;
+            rotationY = ClampAngle(rotationY, minimumY, maximumY);
+            yQuaternion = Quaternion.AngleAxis(-rotationY, Vector3.right);
+            transform.localRotation = originalRotation * xQuaternion * yQuaternion;
         }
     }
 
