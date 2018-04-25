@@ -81,7 +81,6 @@ public class PlayerPawn : PWPawn
             xVelocity = 0;
             zVelocity = 0;
         }
-<<<<<<< HEAD
     }
 
     public static float ClampAngle(float angle, float min, float max)
@@ -95,8 +94,6 @@ public class PlayerPawn : PWPawn
             angle -= 360F;
         }
         return Mathf.Clamp(angle, min, max);
-=======
->>>>>>> 17b9de9cf32b7d72e9de2d9b52b0a21685292c7d
     }
 
     public override void Move(float x, float z)
