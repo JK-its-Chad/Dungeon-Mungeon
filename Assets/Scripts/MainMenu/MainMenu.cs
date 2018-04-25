@@ -8,6 +8,9 @@ public class MainMenu : MonoBehaviour {
 	public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        FindObjectOfType<AudioManager>().stop("MainMenuMusic");
+        FindObjectOfType<AudioManager>().play("InGameMusic");
+
     }
 
     public void QuitGame()
