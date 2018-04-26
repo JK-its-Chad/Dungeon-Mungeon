@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : PWPawn {
 
     Transform transRunner;
     Rigidbody rigRunner;
@@ -17,6 +17,9 @@ public class EnemyAI : MonoBehaviour {
     float timeLastShot = 0f;
     float delayBetweenShots = 1f;
     int attackDmg = 10;
+
+    public int Shield = 100;
+    Actor Player;
 
 
     void Start()
@@ -45,6 +48,18 @@ public class EnemyAI : MonoBehaviour {
                 attack();
             }
         }
+    }
+
+    protected override bool ProcessDamage(Actor Source, float Value, DamageEventInfo EventInfo, Controller Instigator)
+    {
+        Shields -= Value;
+        LOG(ActorName + " HP: " + Shields);
+
+        if (Shields <= 0)
+        {
+            Destroy(gameObject);
+        }
+        return base.ProcessDamage(Source, Value, EventInfo, Instigator);
     }
 
     public float getDistanceTo(GameObject other)
@@ -95,13 +110,13 @@ public class EnemyAI : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
+            Player = GetComponentInParent<Actor>();
             currentTarget = other.gameObject;
         }
     }
 
     void attack()
     {
-        print("DMG!");
-        //do attackDmg to player;
+        Player.TakeDamage(this, attackDmg, new DamageEventInfo(typeof(BaseDamageType)), Owner);
     }
 }

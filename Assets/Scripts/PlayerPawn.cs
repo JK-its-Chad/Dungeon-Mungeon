@@ -14,11 +14,28 @@ public class PlayerPawn : PWPawn
     private float xVelocity;
     private float zVelocity;
 
+    private float minimumX = -360F;
+    private float maximumX = 360F;
+    private float minimumY = -60F;
+    private float maximumY = 60F;
+    private float rotationX = 0f;
+    private float rotationY = 0f;
+    public float sensitivityX = 3f;
+    public float sensitivityY = 3f;
+    private Quaternion originalRotation;
+    private Quaternion xQuaternion;
+    private Quaternion yQuaternion;
+
     public int Key = 0;
 
-    public Transform ProjectileSpawn;
+    public Transform ProjectileSpawn, MagicSpawn;
     public GameObject Projectile1, Projectile2, Camera;
     GameObject currentProjectile;
+
+    public int bullets = 30;
+    private float coolDown1 = 0f;
+    private float coolDown2 = 0f;
+    private float coolDown3 = 0f;
 
 
     public virtual void Start()
@@ -26,12 +43,14 @@ public class PlayerPawn : PWPawn
         IsSpectator = false;
 
         // Add and Set up Rigid Body
-        rb = gameObject.AddComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rb.drag = 10f;
+        rb = gameObject.GetComponent<Rigidbody>();
+
+        originalRotation = Camera.transform.localRotation;
+        xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
+        yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.up); ;
 
 
-        Energy = StartingEnergy;
+        Energy = StartingEnergy * 2;
         Shields = StartingShields;
         currentProjectile = Projectile1;
 
@@ -47,6 +66,10 @@ public class PlayerPawn : PWPawn
             controller.RequestSpectate();
             //Destroy(gameObject);
 
+        }
+        if(Shields > StartingShields * 2)
+        {
+            Shields = StartingShields * 2;
         }
 
         return base.ProcessDamage(Source, Value, EventInfo, Instigator);
@@ -66,6 +89,30 @@ public class PlayerPawn : PWPawn
             xVelocity = 0;
             zVelocity = 0;
         }
+
+
+        if(Energy < StartingEnergy && Time.time > coolDown3)
+        {
+            Energy++;
+            coolDown3 = Time.time + 1f;
+        }
+        else if (Energy > StartingEnergy * 2)
+        {
+            Energy--;
+        }
+    }
+
+    public static float ClampAngle(float angle, float min, float max)
+    {
+        if (angle <= -360F)
+        {
+            angle += 360F;
+        }
+        if (angle >= 360F)
+        {
+            angle -= 360F;
+        }
+        return Mathf.Clamp(angle, min, max);
     }
 
     public override void Move(float x, float z)
@@ -104,7 +151,11 @@ public class PlayerPawn : PWPawn
     {
         if (value != 0)
         {
-            transform.eulerAngles += new Vector3(0, value * 4, 0);
+            //transform.eulerAngles += new Vector3(0, value * 4, 0);
+            rotationX += value * sensitivityX;
+            rotationX = ClampAngle(rotationX, minimumX, maximumX);
+            xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
+            gameObject.transform.localRotation = originalRotation * xQuaternion;
         }
     }
 
@@ -112,16 +163,39 @@ public class PlayerPawn : PWPawn
     {
         if (value != 0)
         {
-            Camera.transform.eulerAngles += new Vector3(-value * 4, 0, 0);
+            //Camera.transform.eulerAngles += new Vector3(-value * 4, 0, 0);
+            rotationY += value * sensitivityY;
+            rotationY = ClampAngle(rotationY, minimumY, maximumY);
+            yQuaternion = Quaternion.AngleAxis(-rotationY, Vector3.right);
+            Camera.transform.localRotation = originalRotation * yQuaternion;
+        }
+    }
+
+    public override void Trigger1(float value)
+    {
+        if (value != 0 && Energy > 30 && Time.time > coolDown1)
+        {
+            Energy -= 30;
+            coolDown1 = Time.time + 1f;
+            Factory(currentProjectile, MagicSpawn.position, MagicSpawn.rotation, controller);
+        }
+    }
+
+    public override void Trigger2(float value)
+    {
+        if (value != 0 && bullets > 0 && Time.time > coolDown2)
+        {
+            bullets--;
+            coolDown2 = Time.time + .5f;
+            //RayCast
         }
     }
 
     public override void Fire1(bool value)
     {
-        if (value)
+        if(value)
         {
-            // Fire Projectile
-            Factory(currentProjectile, ProjectileSpawn.position, ProjectileSpawn.rotation, controller);
+
         }
     }
 
@@ -129,8 +203,7 @@ public class PlayerPawn : PWPawn
     {
         if (value)
         {
-            // Set Current Projectile to Prijectile 1
-            currentProjectile = Projectile1;
+
         }
     }
 
@@ -138,8 +211,14 @@ public class PlayerPawn : PWPawn
     {
         if (value)
         {
-            // Set Current Projectile to Prijectile 2
-            currentProjectile = Projectile2;
+            if(currentProjectile == Projectile1)
+            {
+                currentProjectile = Projectile2;
+            }
+            else if (currentProjectile == Projectile2)
+            {
+                currentProjectile = Projectile1;
+            }
         }
     }
 }

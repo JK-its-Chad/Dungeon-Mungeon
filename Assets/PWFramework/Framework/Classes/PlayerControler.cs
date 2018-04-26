@@ -123,6 +123,7 @@ public class PlayerController : Controller
         AddAxis("Mouse X", MouseX);
         AddAxis("Mouse Y", MouseY);
         AddAxis("Trigger1", Trigger1);
+        AddAxis("Trigger2", Trigger2);
         AddButton("Fire1", Fire1);
         AddButton("Fire2", Fire2);
         AddButton("Fire3", Fire3);
@@ -162,6 +163,14 @@ public class PlayerController : Controller
     }
 
     public virtual void Trigger1(float value)
+    {
+        if (value != 0)
+        {
+            LOG("Left Trigger (" + value + ")");
+        }
+    }
+
+    public virtual void Trigger2(float value)
     {
         if (value != 0)
         {

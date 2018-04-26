@@ -26,13 +26,13 @@ public class MonsterDoor : Door {
 
     private void Update()
     {
-        if (Side1.doorCollision.tag == "Player" && Side1.doorCollision.GetComponent<PlayerPawn>().Key >= Arch.KeyAccess)
+        if (Side1.doorCollision.tag == "Player" && Side1.doorCollision.GetComponentInParent<PlayerPawn>().Key >= Arch.KeyAccess)
         {
             if (Arch.SecondRoom.GetComponent<KeyRoom>())
             {
                 Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
-                GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
-                MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
+                //GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                //MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
             }
             else
             {
@@ -49,14 +49,14 @@ public class MonsterDoor : Door {
            
             Destroy(gameObject);
         }
-        if (Side2.doorCollision.tag == "Player" && Side2.doorCollision.GetComponent<PlayerPawn>().Key >= Arch.KeyAccess)
+        if (Side2.doorCollision.tag == "Player" && Side2.doorCollision.GetComponentInParent<PlayerPawn>().Key >= Arch.KeyAccess)
         {
            
             if (Arch.FirstRoom.GetComponent<KeyRoom>())
             {
                 Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
-                GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
-                MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
+                //GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                //MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
             }
             else
             {
