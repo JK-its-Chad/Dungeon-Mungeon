@@ -103,6 +103,24 @@ public class PWPlayerController : PlayerController {
         }
     }
 
+    public override void Trigger1(float value)
+    { 
+        PWPawn CP = (PWPawn)PossesedPawn;
+        if (CP)
+        {
+            CP.Trigger1(value);
+        }
+    }
+
+    public override void Trigger2(float value)
+    {
+        PWPawn CP = (PWPawn)PossesedPawn;
+        if (CP)
+        {
+            CP.Trigger2(value);
+        }
+    }
+
     public override void Fire1(bool value)
     {
         PWPawn CP = (PWPawn)PossesedPawn;

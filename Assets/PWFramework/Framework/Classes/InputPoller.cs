@@ -77,6 +77,7 @@ public class InputPoller : Info {
         IS.AddAxis("Mouse X", Input.GetAxis("Mouse X"));
         IS.AddAxis("Mouse Y", Input.GetAxis("Mouse Y"));
         IS.AddAxis("Trigger1", Input.GetAxis("Trigger1"));
+        IS.AddAxis("Trigger2", Input.GetAxis("Trigger2"));
         IS.AddButton("Fire1", Input.GetButton("Fire1"));
         IS.AddButton("Fire2", Input.GetButton("Fire2"));
         IS.AddButton("Fire3", Input.GetButton("Fire3"));

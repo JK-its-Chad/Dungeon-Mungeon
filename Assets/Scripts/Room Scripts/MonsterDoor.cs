@@ -26,7 +26,7 @@ public class MonsterDoor : Door {
 
     private void Update()
     {
-        if (Side1.doorCollision.tag == "Player" && Side1.doorCollision.GetComponent<PlayerPawn>().Key >= Arch.KeyAccess)
+        if (Side1.doorCollision.tag == "Player" && Side1.doorCollision.GetComponentInParent<PlayerPawn>().Key >= Arch.KeyAccess)
         {
             if (Arch.SecondRoom.GetComponent<KeyRoom>())
             {
@@ -49,7 +49,7 @@ public class MonsterDoor : Door {
            
             Destroy(gameObject);
         }
-        if (Side2.doorCollision.tag == "Player" && Side2.doorCollision.GetComponent<PlayerPawn>().Key >= Arch.KeyAccess)
+        if (Side2.doorCollision.tag == "Player" && Side2.doorCollision.GetComponentInParent<PlayerPawn>().Key >= Arch.KeyAccess)
         {
            
             if (Arch.FirstRoom.GetComponent<KeyRoom>())

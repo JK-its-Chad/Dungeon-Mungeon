@@ -35,6 +35,16 @@ public class PWPawn : Pawn {
 
     }
 
+    public virtual void Trigger1(float value)
+    {
+
+    }
+
+    public virtual void Trigger2(float value)
+    {
+
+    }
+
     public virtual void Fire1(bool value)
     {
        

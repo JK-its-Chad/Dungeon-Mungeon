@@ -8,14 +8,13 @@ public class PWSpikes : Actor {
    
     private void OnTriggerEnter(Collider other)
     {
-        Actor OtherActor 
-            = other.gameObject.GetComponentInParent<Actor>();
+        Actor OtherActor = other.gameObject.GetComponentInParent<Actor>();
         if (OtherActor)
         {
             OtherActor.TakeDamage(
                 this, 
                 DamageAmount, 
-                new DamageEventInfo(typeof(SpikeDamageType))); 
+                new DamageEventInfo(typeof(SpikeDamageType)));
         }
     }
 

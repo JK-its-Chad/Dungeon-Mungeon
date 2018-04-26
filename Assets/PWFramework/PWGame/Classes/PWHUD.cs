@@ -28,11 +28,11 @@ public class PWHUD : FrameworkHUD
         }
         if (ShieldsField)
         {
-            ShieldsField.text = "Shields: " + Shields;
+            ShieldsField.text = "Health: " + Shields;
         }
         if (EnergyField)
         {
-            EnergyField.text = "Energy: " + Energy;
+            EnergyField.text = "Mana: " + Energy;
         }
         if (ShieldSlider)
         {

@@ -28,9 +28,14 @@ public class PlayerPawn : PWPawn
 
     public int Key = 0;
 
-    public Transform ProjectileSpawn;
+    public Transform ProjectileSpawn, MagicSpawn;
     public GameObject Projectile1, Projectile2, Camera;
     GameObject currentProjectile;
+
+    public int bullets = 30;
+    private float coolDown1 = 0f;
+    private float coolDown2 = 0f;
+    private float coolDown3 = 0f;
 
 
     public virtual void Start()
@@ -38,15 +43,14 @@ public class PlayerPawn : PWPawn
         IsSpectator = false;
 
         // Add and Set up Rigid Body
-        rb = gameObject.AddComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rb.drag = 10f;
-        originalRotation = transform.localRotation;
+        rb = gameObject.GetComponent<Rigidbody>();
+
+        originalRotation = Camera.transform.localRotation;
         xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
         yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.up); ;
 
 
-        Energy = StartingEnergy;
+        Energy = StartingEnergy * 2;
         Shields = StartingShields;
         currentProjectile = Projectile1;
 
@@ -62,6 +66,10 @@ public class PlayerPawn : PWPawn
             controller.RequestSpectate();
             //Destroy(gameObject);
 
+        }
+        if(Shields > StartingShields * 2)
+        {
+            Shields = StartingShields * 2;
         }
 
         return base.ProcessDamage(Source, Value, EventInfo, Instigator);
@@ -80,6 +88,17 @@ public class PlayerPawn : PWPawn
             rb.velocity = Vector3.zero;
             xVelocity = 0;
             zVelocity = 0;
+        }
+
+
+        if(Energy < StartingEnergy && Time.time > coolDown3)
+        {
+            Energy++;
+            coolDown3 = Time.time + 1f;
+        }
+        else if (Energy > StartingEnergy * 2)
+        {
+            Energy--;
         }
     }
 
@@ -136,7 +155,7 @@ public class PlayerPawn : PWPawn
             rotationX += value * sensitivityX;
             rotationX = ClampAngle(rotationX, minimumX, maximumX);
             xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
-            transform.localRotation = originalRotation * xQuaternion * yQuaternion;
+            gameObject.transform.localRotation = originalRotation * xQuaternion;
         }
     }
 
@@ -148,16 +167,35 @@ public class PlayerPawn : PWPawn
             rotationY += value * sensitivityY;
             rotationY = ClampAngle(rotationY, minimumY, maximumY);
             yQuaternion = Quaternion.AngleAxis(-rotationY, Vector3.right);
-            transform.localRotation = originalRotation * xQuaternion * yQuaternion;
+            Camera.transform.localRotation = originalRotation * yQuaternion;
+        }
+    }
+
+    public override void Trigger1(float value)
+    {
+        if (value != 0 && Energy > 30 && Time.time > coolDown1)
+        {
+            Energy -= 30;
+            coolDown1 = Time.time + 1f;
+            Factory(currentProjectile, MagicSpawn.position, MagicSpawn.rotation, controller);
+        }
+    }
+
+    public override void Trigger2(float value)
+    {
+        if (value != 0 && bullets > 0 && Time.time > coolDown2)
+        {
+            bullets--;
+            coolDown2 = Time.time + .5f;
+            //RayCast
         }
     }
 
     public override void Fire1(bool value)
     {
-        if (value)
+        if(value)
         {
-            // Fire Projectile
-            Factory(currentProjectile, ProjectileSpawn.position, ProjectileSpawn.rotation, controller);
+
         }
     }
 
@@ -165,8 +203,7 @@ public class PlayerPawn : PWPawn
     {
         if (value)
         {
-            // Set Current Projectile to Prijectile 1
-            currentProjectile = Projectile1;
+
         }
     }
 
@@ -174,8 +211,14 @@ public class PlayerPawn : PWPawn
     {
         if (value)
         {
-            // Set Current Projectile to Prijectile 2
-            currentProjectile = Projectile2;
+            if(currentProjectile == Projectile1)
+            {
+                currentProjectile = Projectile2;
+            }
+            else if (currentProjectile == Projectile2)
+            {
+                currentProjectile = Projectile1;
+            }
         }
     }
 }
