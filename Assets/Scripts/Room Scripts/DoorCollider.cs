@@ -8,6 +8,7 @@ public class DoorCollider : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("HELLO");
         Debug.Log(other.tag);
         if(other.tag == "Player")
         {
