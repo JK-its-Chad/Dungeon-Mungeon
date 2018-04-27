@@ -6,7 +6,7 @@ public class TurretAI : Actor {
 
     public GameObject Eye, Body, Gem, ProjectileSpawn, Projectile;
 
-    private GameObject Player;
+    public GameObject Player;
     private GameObject MathObject;
 
     private bool canTurn = true;
@@ -17,7 +17,6 @@ public class TurretAI : Actor {
 	void Start () {
         Player = GameObject.FindGameObjectWithTag("Player");
         MathObject = new GameObject();
-        Instantiate(MathObject, ProjectileSpawn.transform.position, Quaternion.identity);
 	}
 	
 	// Update is called once per frame

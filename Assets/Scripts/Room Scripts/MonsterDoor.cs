@@ -31,16 +31,16 @@ public class MonsterDoor : Door {
             if (Arch.SecondRoom.GetComponent<KeyRoom>())
             {
                 Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
-                //GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
-                //MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
+                GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
             }
             else
             {
                 Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
 
-                //pickMonster(randomPos(centerOfRoom));
-                //pickMonster(randomPos(centerOfRoom));
-                //pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
 
 
                 pickProp(randomPos(centerOfRoom));
@@ -55,16 +55,16 @@ public class MonsterDoor : Door {
             if (Arch.FirstRoom.GetComponent<KeyRoom>())
             {
                 Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
-                //GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
-                //MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
+                GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
             }
             else
             {
                 Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
 
-                //pickMonster(randomPos(centerOfRoom));
-                //pickMonster(randomPos(centerOfRoom));
-                //pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
+                pickMonster(randomPos(centerOfRoom));
 
 
                 pickProp(randomPos(centerOfRoom));

@@ -26,6 +26,7 @@ public class EnemyAI : PWPawn {
     {
         transRunner = gameObject.GetComponent<Transform>();
         rigRunner = gameObject.GetComponent<Rigidbody>();
+        currentTarget = GameObject.FindGameObjectWithTag("Player");
 
         UpdateMoveDirection();
     }
@@ -91,20 +92,25 @@ public class EnemyAI : PWPawn {
 
     public void UpdateMoveDirection()
     {
-        Vector3 runnerPosition = transRunner.position;
-
-        Transform transOther = currentTarget.GetComponent<Transform>();
-        Vector3 otherPosition = transOther.position;
-
-        Vector3 distanceVec = otherPosition - runnerPosition;
-        moveDirection = distanceVec.normalized;
-
-        if (hasDynamicRotation)
+        if (currentTarget)
         {
-            float angle = Vector3.SignedAngle(Vector3.back, moveDirection, Vector3.up);
+            Vector3 runnerPosition = transRunner.position;
 
-            transRunner.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+            Transform transOther = currentTarget.GetComponent<Transform>();
+            Vector3 otherPosition = transOther.position;
+
+            Vector3 distanceVec = otherPosition - runnerPosition;
+            moveDirection = distanceVec.normalized;
+
+            if (hasDynamicRotation)
+            {
+                float angle = Vector3.SignedAngle(Vector3.back, moveDirection, Vector3.up);
+
+                transRunner.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+            }
         }
+        else moveDirection = Vector3.zero;
+        
     }
     private void OnTriggerEnter(Collider other)
     {

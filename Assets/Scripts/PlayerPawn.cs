@@ -173,7 +173,7 @@ public class PlayerPawn : PWPawn
 
     public override void Trigger1(float value)
     {
-        if (value != 0 && Energy > 30 && Time.time > coolDown1)
+        if (value != 0 && Energy >= 30 && Time.time > coolDown1)
         {
             Energy -= 30;
             coolDown1 = Time.time + 1f;
