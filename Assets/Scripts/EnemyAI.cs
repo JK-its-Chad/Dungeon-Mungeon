@@ -12,6 +12,8 @@ public class EnemyAI : PWPawn {
     public bool hasDynamicDirection = true;
     public bool hasDynamicRotation = true;
 
+    public GameObject heartPickup, manaPickUp, bulletPickUp;
+
     public int personalSpace = 5;
 
     float timeLastShot = 0f;
@@ -27,6 +29,7 @@ public class EnemyAI : PWPawn {
         transRunner = gameObject.GetComponent<Transform>();
         rigRunner = gameObject.GetComponent<Rigidbody>();
         currentTarget = GameObject.FindGameObjectWithTag("Player");
+        Player = currentTarget.GetComponent<PlayerPawn>();
 
         UpdateMoveDirection();
     }
@@ -58,6 +61,7 @@ public class EnemyAI : PWPawn {
 
         if (Shields <= 0)
         {
+            pickProp(gameObject.transform.position);
             Destroy(gameObject);
         }
         return base.ProcessDamage(Source, Value, EventInfo, Instigator);
@@ -124,5 +128,28 @@ public class EnemyAI : PWPawn {
     void attack()
     {
         Player.TakeDamage(this, attackDmg, new DamageEventInfo(typeof(BaseDamageType)), Owner);
+    }
+
+    void pickProp(Vector3 pos)
+    {
+        GameObject item = heartPickup; ;
+        switch (rollDice(3))
+        {
+            case 0:
+                item = heartPickup;
+                break;
+            case 1:
+                item = manaPickUp;
+                break;
+            case 2:
+                item = bulletPickUp;
+                break;
+        }
+        Factory(item, pos, Quaternion.identity);
+    }
+
+    int rollDice(int options)
+    {
+        return Random.Range(0, options);
     }
 }
