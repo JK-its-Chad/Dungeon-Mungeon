@@ -9,7 +9,7 @@ public class MonsterDoor : Door {
     // ROTATE ME 90 IF IM LEFT OR RIGHT
     public DoorCollider Side1, Side2;
     public GameObject golem, knight, lizard, skeleton, Turret;
-    public GameObject barrel, spikes, rocks;
+    public GameObject barrel, spikes, rocks, Lock;
     public Door Arch;
 
     GameObject item;
@@ -22,53 +22,65 @@ public class MonsterDoor : Door {
 	void Start ()
     {
         trans = GetComponent<Transform>();
-	}
+        KeyAccess = Arch.KeyAccess;
+        setColor();
+    }
 
     private void Update()
     {
         if (Side1.doorCollision.tag == "Player" && Side1.doorCollision.GetComponentInParent<PlayerPawn>().Key >= Arch.KeyAccess)
         {
-            if (Arch.SecondRoom.GetComponent<KeyRoom>())
+            if (Arch.SecondRoom.GetComponent<Room>().canSpawn)
             {
-                Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
-                GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
-                MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
-            }
-            else
-            {
-                Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
+                if (Arch.SecondRoom.GetComponent<KeyRoom>())
+                {
+                    Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
+                    GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                    MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
+                    MiniBoss.GetComponent<TurretAI>().Room = Arch.SecondRoom;
+                }
+                else
+                {
+                    Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
 
-                pickMonster(randomPos(centerOfRoom));
-                pickMonster(randomPos(centerOfRoom));
-                pickMonster(randomPos(centerOfRoom));
+                    pickMonster(randomPos(centerOfRoom));
+                    pickMonster(randomPos(centerOfRoom));
+                    pickMonster(randomPos(centerOfRoom));
 
 
-                pickProp(randomPos(centerOfRoom));
-                pickProp(randomPos(centerOfRoom));
+                    pickProp(randomPos(centerOfRoom));
+                    pickProp(randomPos(centerOfRoom));
+                    Arch.SecondRoom.GetComponent<Room>().canSpawn = false;
+                }
             }
            
             Destroy(gameObject);
         }
         if (Side2.doorCollision.tag == "Player" && Side2.doorCollision.GetComponentInParent<PlayerPawn>().Key >= Arch.KeyAccess)
         {
-           
-            if (Arch.FirstRoom.GetComponent<KeyRoom>())
+            if (Arch.FirstRoom.GetComponent<Room>().canSpawn)
             {
-                Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
-                GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
-                MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
-            }
-            else
-            {
-                Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
+                if (Arch.FirstRoom.GetComponent<KeyRoom>())
+                {
+                    Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
+                    GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                    MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
+                    MiniBoss.GetComponent<TurretAI>().Room = Arch.FirstRoom;
+                }
+                else
+                {
+                    Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
 
-                pickMonster(randomPos(centerOfRoom));
-                pickMonster(randomPos(centerOfRoom));
-                pickMonster(randomPos(centerOfRoom));
+                    pickMonster(randomPos(centerOfRoom));
+                    pickMonster(randomPos(centerOfRoom));
+                    pickMonster(randomPos(centerOfRoom));
 
 
-                pickProp(randomPos(centerOfRoom));
-                pickProp(randomPos(centerOfRoom));
+                    pickProp(randomPos(centerOfRoom));
+                    pickProp(randomPos(centerOfRoom));
+
+                    Arch.FirstRoom.GetComponent<Room>().canSpawn = false;
+                }
             }
 
             Destroy(gameObject);
@@ -124,5 +136,14 @@ public class MonsterDoor : Door {
         position.z += Random.Range(-20, 20);
 
         return position;
+    }
+
+    public override void setColor()
+    {
+        Lock.GetComponent<Renderer>().material = Colors[KeyAccess];
+        foreach (Transform child in Lock.transform)
+        {
+            child.gameObject.GetComponent<Renderer>().material = Colors[KeyAccess];
+        }
     }
 }

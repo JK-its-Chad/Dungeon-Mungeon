@@ -7,6 +7,7 @@ public class PickUps : Actor {
     public bool heart;
     public bool mana;
     public bool bullet;
+    public bool key;
 
     public int healAmount = 10;
     public int manaAmount = 10;
@@ -45,6 +46,11 @@ public class PickUps : Actor {
             {
                 OtherActor.bullets += ammoAmount;
                 print("BULLET");
+            }
+            if (key)
+            {
+                OtherActor.Key++;
+                print("Next Key Acquired");
             }
             Destroy(gameObject);
         }

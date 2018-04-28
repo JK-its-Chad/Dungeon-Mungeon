@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     public GameObject FirstRoom;
     public GameObject SecondRoom;
 
-    public void setColor()
+    public virtual void setColor()
     {
         gameObject.GetComponent<Renderer>().material = Colors[KeyAccess];
     }

@@ -6,6 +6,8 @@ public class Room : MonoBehaviour {
 
     public int KeyAccess;
 
+    public bool canSpawn = true;
+
     public GameObject NorthDoor;
     public GameObject EastDoor;
     public GameObject SouthDoor;

@@ -562,6 +562,7 @@ public class MapGenerator : MonoBehaviour
                 newDoor.GetComponent<Door>().FirstRoom = door.GetComponent<Door>().FirstRoom;
                 newDoor.GetComponent<Door>().SecondRoom = door.GetComponent<Door>().SecondRoom;
             }
+            Destroy(door);
         }
     }
 
