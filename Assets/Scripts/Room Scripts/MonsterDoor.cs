@@ -8,7 +8,7 @@ public class MonsterDoor : Door {
     // SPAWN ME 25.5 AWAY
     // ROTATE ME 90 IF IM LEFT OR RIGHT
     public DoorCollider Side1, Side2;
-    public GameObject golem, knight, lizard, skeleton, Turret;
+    public GameObject golem, knight, lizard, skeleton, Turret, FinalTurret;
     public GameObject barrel, spikes, rocks, Lock;
     public Door Arch;
 
@@ -34,10 +34,29 @@ public class MonsterDoor : Door {
             {
                 if (Arch.SecondRoom.GetComponent<KeyRoom>())
                 {
-                    Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
-                    GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
-                    MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
-                    MiniBoss.GetComponent<TurretAI>().Room = Arch.SecondRoom;
+                    if (Arch.SecondRoom.GetComponent<KeyRoom>().KeyAccess + 1 == GameObject.Find("Spawn").GetComponent<MapGenerator>().KeyRooms)
+                    {
+                        Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
+                        GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x + 10, -2, Arch.SecondRoom.transform.position.z + 10);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.SecondRoom;
+                        MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x + 10, -2, Arch.SecondRoom.transform.position.z - 10);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.SecondRoom;
+                        MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x - 10, -2, Arch.SecondRoom.transform.position.z - 10);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.SecondRoom;
+                        MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x - 10, -2, Arch.SecondRoom.transform.position.z + 10);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.SecondRoom;
+                    }
+                    else
+                    {
+                        Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
+                        GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.SecondRoom.transform.position.x, -2, Arch.SecondRoom.transform.position.z);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.SecondRoom;
+                    }
                 }
                 else
                 {
@@ -62,10 +81,29 @@ public class MonsterDoor : Door {
             {
                 if (Arch.FirstRoom.GetComponent<KeyRoom>())
                 {
-                    Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
-                    GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
-                    MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
-                    MiniBoss.GetComponent<TurretAI>().Room = Arch.FirstRoom;
+                    if (Arch.FirstRoom.GetComponent<KeyRoom>().KeyAccess + 1 == GameObject.Find("Spawn").GetComponent<MapGenerator>().KeyRooms)
+                    {
+                        Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
+                        GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x + 10, -2, Arch.FirstRoom.transform.position.z + 10);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.FirstRoom;
+                        MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x + 10, -2, Arch.FirstRoom.transform.position.z - 10);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.FirstRoom;
+                        MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x - 10, -2, Arch.FirstRoom.transform.position.z - 10);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.FirstRoom;
+                        MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x - 10, -2, Arch.FirstRoom.transform.position.z + 10);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.FirstRoom;
+                    }
+                    else
+                    { 
+                        Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
+                        GameObject MiniBoss = Instantiate(Turret, centerOfRoom, Quaternion.identity);
+                        MiniBoss.transform.position = new Vector3(Arch.FirstRoom.transform.position.x, -2, Arch.FirstRoom.transform.position.z);
+                        MiniBoss.GetComponent<TurretAI>().Room = Arch.FirstRoom;
+                    }
                 }
                 else
                 {

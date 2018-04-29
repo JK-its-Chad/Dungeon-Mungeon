@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurretTarget : Actor
 {
     public TurretAI Turret;
-    private float Health = 150;
+    public float Health = 150;
 
     protected override bool ProcessDamage(Actor Source, float Value, DamageEventInfo EventInfo, Controller Instigator)
     {

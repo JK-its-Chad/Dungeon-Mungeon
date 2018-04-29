@@ -14,12 +14,18 @@ public class TurretAI : Actor {
     private bool canTurn = true;
     private bool canShoot = true;
 
-    private float fireTimer = 1;
+    private float fireTimer = 0.5f;
+    public float fireCooldown = 0.5f;
+    public float StunLength = 4;
+    public float Health = 150;
     private float stunTimer = 0;
+
+    public bool dropKey = true;
 
 	void Start () {
         Player = GameObject.FindGameObjectWithTag("Player");
         MathObject = new GameObject();
+        Gem.GetComponent<TurretTarget>().Health = Health;
 	}
 	
 	// Update is called once per frame
@@ -41,8 +47,12 @@ public class TurretAI : Actor {
 
         if (fireTimer <= 0 && stunTimer <= 0)
         {
-            Instantiate(Projectile, ProjectileSpawn.transform.position, MathObject.transform.rotation);
-            fireTimer = 2f;
+            Vector3 directionToTarget = Body.transform.position - Player.transform.position;
+            float angle = Vector3.Angle(Body.transform.forward, directionToTarget);
+            if (Mathf.Abs(angle) > 90) {
+                Instantiate(Projectile, ProjectileSpawn.transform.position, MathObject.transform.rotation);
+                fireTimer = 2f;
+            }
         }
         else fireTimer -= Time.deltaTime;
     }
@@ -51,16 +61,19 @@ public class TurretAI : Actor {
     {
         canTurn = false;
         canShoot = false;
-        stunTimer = 4;
+        stunTimer = StunLength;
     }
 
     public void Die()
     {
-        GameObject SpawnedKey = Instantiate(Key, new Vector3(gameObject.transform.position.x, 6, gameObject.transform.position.z), Quaternion.identity);
-        SpawnedKey.GetComponent<Renderer>().material = Colors[Room.GetComponent<Room>().KeyAccess + 1];
-        foreach(Transform child in SpawnedKey.transform)
-        {
-            child.GetComponent<Renderer>().material = Colors[Room.GetComponent<Room>().KeyAccess + 1];
+        if (dropKey)
+        { 
+            GameObject SpawnedKey = Instantiate(Key, new Vector3(gameObject.transform.position.x, 6, gameObject.transform.position.z), Quaternion.identity);
+            SpawnedKey.GetComponent<Renderer>().material = Colors[Room.GetComponent<Room>().KeyAccess + 1];
+            foreach (Transform child in SpawnedKey.transform)
+            {
+                child.GetComponent<Renderer>().material = Colors[Room.GetComponent<Room>().KeyAccess + 1];
+            }
         }
         Destroy(gameObject);
     }

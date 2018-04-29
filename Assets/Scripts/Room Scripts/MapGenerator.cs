@@ -473,7 +473,11 @@ public class MapGenerator : MonoBehaviour
             newRoom.WestRoom = oldRoom.WestRoom;
             newRoom.EastRoom = oldRoom.EastRoom;
 
-            Destroy(room);
+            if(room.transform.position == Vector3.zero)
+            {
+                room.transform.position = new Vector3(0, -1000, 0);
+            }
+            else Destroy(room);
         }
         Rooms = GameObject.FindGameObjectsWithTag("Final Room");
         foreach (GameObject room in Rooms)
