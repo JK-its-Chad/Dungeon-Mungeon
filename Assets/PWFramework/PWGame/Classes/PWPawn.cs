@@ -9,6 +9,7 @@ public class PWPawn : Pawn {
 
     public float Energy = 100.0f;
     public float Shields = 100.0f;
+    public int bullets = 30;
 
     public virtual void Move(float value, float z)
     {

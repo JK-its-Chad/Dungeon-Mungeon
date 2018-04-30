@@ -37,13 +37,13 @@ public class EnemyAI : PWPawn {
         {
             case 0:
                 moveSpeed++;
-                moveSpeed++;
                 attackDmg--;
                 break;
             case 1:
-                moveSpeed++;
                 break;
             case 2:
+                moveSpeed--;
+                moveSpeed--;
                 moveSpeed--;
                 attackDmg++;
                 attackDmg++;

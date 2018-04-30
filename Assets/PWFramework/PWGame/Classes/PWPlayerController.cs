@@ -61,6 +61,7 @@ public class PWPlayerController : PlayerController {
             hud.PlayerNumber = (this.InputPlayerNumber + 1);
             hud.Shields = (int)pawn.Shields;
             hud.Energy = (int)pawn.Energy;
+            hud.Bullets = (int)pawn.bullets;
         }
         
     }

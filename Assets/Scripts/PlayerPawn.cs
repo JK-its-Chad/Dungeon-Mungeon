@@ -32,7 +32,10 @@ public class PlayerPawn : PWPawn
     public GameObject Projectile1, Projectile2, Camera;
     GameObject currentProjectile;
 
-    public int bullets = 30;
+    int bulletdmg = 25;
+    public GameObject SwordThing;
+    bool SwordSwing = false;
+
     private float coolDown1 = 0f;
     private float coolDown2 = 0f;
     private float coolDown3 = 0f;
@@ -52,7 +55,11 @@ public class PlayerPawn : PWPawn
 
         Energy = StartingEnergy * 2;
         Shields = StartingShields;
+        bullets = 30;
         currentProjectile = Projectile1;
+
+        //GunThing.SetActive(true);
+        SwordThing.SetActive(false);
 
     }
 
@@ -183,11 +190,28 @@ public class PlayerPawn : PWPawn
 
     public override void Trigger2(float value)
     {
-        if (value != 0 && bullets > 0 && Time.time > coolDown2)
+        if (value != 0)
         {
-            bullets--;
-            coolDown2 = Time.time + .5f;
-            //RayCast
+            if (!SwordSwing && bullets > 0 && Time.time > coolDown2)
+            {
+                bullets--;
+                coolDown2 = Time.time + .33f;
+                RaycastHit hit;
+                if (Physics.Raycast(ProjectileSpawn.position, ProjectileSpawn.forward, out hit))
+                {
+                    Actor monster = hit.collider.GetComponent<Actor>();
+                    if (monster)
+                    {
+                        monster.TakeDamage(this, bulletdmg, new DamageEventInfo(typeof(ProjectileDamageType)), Owner);
+                    }
+                }
+                print("pew");
+            }
+            else if(SwordSwing && Time.time > coolDown2)
+            {
+                coolDown2 = Time.time + .5f;
+                print("swing");
+            }
         }
     }
 
@@ -195,7 +219,18 @@ public class PlayerPawn : PWPawn
     {
         if(value)
         {
-
+            if(SwordSwing)
+            {
+                //GunThing.SetActive(true);
+                SwordThing.SetActive(false);
+                SwordSwing = false;
+            }
+            else
+            {
+                //GunThing.SetActive(false);
+                SwordThing.SetActive(true);
+                SwordSwing = true;
+            }
         }
     }
 

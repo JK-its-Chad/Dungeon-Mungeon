@@ -8,13 +8,15 @@ public class PWHUD : FrameworkHUD
     public int PlayerNumber = 0;
     public int Shields = 0;
     public int Energy = 0;
+    public int Bullets = 0;
 
-   
+
 
     public Text PlayerNumberField;
     public Text ShieldsField;
     public Slider ShieldSlider;
     public Text EnergyField;
+    public Text BulletField;
 
     public GameObject ActivePanel;
     public GameObject SpectatePanel;
@@ -38,6 +40,9 @@ public class PWHUD : FrameworkHUD
         {
             ShieldSlider.value = Shields; 
         }
-
+        if(BulletField)
+        {
+            BulletField.text = "Bullets: " + Bullets;
+        }
     }
 }
