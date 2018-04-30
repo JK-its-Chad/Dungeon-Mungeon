@@ -6,7 +6,7 @@ public class EnemyAI : PWPawn {
 
     Transform transRunner;
     Rigidbody rigRunner;
-    GameObject currentTarget;
+    public GameObject currentTarget;
     public float moveSpeed = 10;
     Vector3 moveDirection;
     public bool hasDynamicDirection = true;
@@ -18,10 +18,10 @@ public class EnemyAI : PWPawn {
 
     float timeLastShot = 0f;
     float delayBetweenShots = 1f;
-    int attackDmg = 10;
+    public int attackDmg = 10;
 
     public int Shield = 100;
-    Actor Player;
+    public Actor Player;
 
 
     void Start()
@@ -32,6 +32,26 @@ public class EnemyAI : PWPawn {
         Player = currentTarget.GetComponent<PlayerPawn>();
 
         UpdateMoveDirection();
+
+        switch (rollDice(4))
+        {
+            case 0:
+                moveSpeed++;
+                moveSpeed++;
+                attackDmg--;
+                break;
+            case 1:
+                moveSpeed++;
+                break;
+            case 2:
+                moveSpeed--;
+                attackDmg++;
+                attackDmg++;
+                attackDmg++;
+                break;
+            case 3:
+                break;
+        }
     }
 
     void Update()
@@ -61,7 +81,9 @@ public class EnemyAI : PWPawn {
 
         if (Shields <= 0)
         {
-            pickProp(gameObject.transform.position);
+            Vector3 spawnHere = gameObject.transform.position;
+            spawnHere.y--;
+            pickProp(spawnHere);
             Destroy(gameObject);
         }
         return base.ProcessDamage(Source, Value, EventInfo, Instigator);
@@ -115,14 +137,6 @@ public class EnemyAI : PWPawn {
         }
         else moveDirection = Vector3.zero;
         
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            Player = GetComponentInParent<Actor>();
-            currentTarget = other.gameObject;
-        }
     }
 
     void attack()
