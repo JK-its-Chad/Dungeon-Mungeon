@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour {
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         FindObjectOfType<AudioManager>().stop("MainMenuMusic");
-        FindObjectOfType<AudioManager>().play("InGameMusic");
+        FindObjectOfType<AudioManager>().play("Theme");
 
     }
 
