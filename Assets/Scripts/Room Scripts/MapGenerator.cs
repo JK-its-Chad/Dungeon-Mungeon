@@ -22,10 +22,13 @@ public class MapGenerator : MonoBehaviour
     {
         Random.seed = (int)System.DateTime.Now.Ticks;
         KeyPath = new GameObject[100];
+        KeyRooms = KeyRooms -1;
         PlaceKeyRooms();
         PlaceExtraRooms();
+        PlaceBossRoom();
         CreateRooms();
         CreateDoors();
+
 
         GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
     }
@@ -103,6 +106,84 @@ public class MapGenerator : MonoBehaviour
                 i++;
             }
 
+        }
+    }
+
+    private void PlaceBossRoom()
+    {
+        GameObject[] Rooms = GameObject.FindGameObjectsWithTag("Room");
+
+        foreach(GameObject room in Rooms)
+        {
+            if(!room.GetComponent<KeyRoom>())
+            {
+                KeyRoom KRm;
+                Room Rm = room.GetComponent<Room>();
+                if (Rm.NorthDoor && !Rm.SouthDoor && !Rm.EastDoor && !Rm.WestDoor)
+                {
+                    KRm = room.AddComponent<KeyRoom>();
+                    KRm.KeyAccess = KeyRooms;
+                    KRm.KeyNumber = KeyRooms;
+                    KRm.NorthDoor = Rm.NorthDoor;
+                    KRm.SouthDoor = Rm.SouthDoor;
+                    KRm.EastDoor = Rm.EastDoor;
+                    KRm.WestDoor = Rm.WestDoor;
+                    KRm.NorthRoom = Rm.NorthRoom;
+                    KRm.SouthRoom = Rm.SouthRoom;
+                    KRm.EastRoom = Rm.EastRoom;
+                    KRm.WestRoom = Rm.WestRoom;
+                    KRm.NorthDoor.GetComponent<Door>().KeyAccess = KeyRooms;
+                    return;
+                }
+                else if (!Rm.NorthDoor && Rm.SouthDoor && !Rm.EastDoor && !Rm.WestDoor)
+                {
+                    KRm = room.AddComponent<KeyRoom>();
+                    KRm.KeyAccess = KeyRooms;
+                    KRm.KeyNumber = KeyRooms;
+                    KRm.NorthDoor = Rm.NorthDoor;
+                    KRm.SouthDoor = Rm.SouthDoor;
+                    KRm.EastDoor = Rm.EastDoor;
+                    KRm.WestDoor = Rm.WestDoor;
+                    KRm.NorthRoom = Rm.NorthRoom;
+                    KRm.SouthRoom = Rm.SouthRoom;
+                    KRm.EastRoom = Rm.EastRoom;
+                    KRm.WestRoom = Rm.WestRoom;
+                    KRm.SouthDoor.GetComponent<Door>().KeyAccess = KeyRooms;
+                    return;
+                }
+                else if (!Rm.NorthDoor && !Rm.SouthDoor && Rm.EastDoor && !Rm.WestDoor)
+                {
+                    KRm = room.AddComponent<KeyRoom>();
+                    KRm.KeyAccess = KeyRooms;
+                    KRm.KeyNumber = KeyRooms;
+                    KRm.NorthDoor = Rm.NorthDoor;
+                    KRm.SouthDoor = Rm.SouthDoor;
+                    KRm.EastDoor = Rm.EastDoor;
+                    KRm.WestDoor = Rm.WestDoor;
+                    KRm.NorthRoom = Rm.NorthRoom;
+                    KRm.SouthRoom = Rm.SouthRoom;
+                    KRm.EastRoom = Rm.EastRoom;
+                    KRm.WestRoom = Rm.WestRoom;
+                    KRm.EastDoor.GetComponent<Door>().KeyAccess = KeyRooms;
+                    return;
+                }
+                else if (!Rm.NorthDoor && !Rm.SouthDoor && !Rm.EastDoor && Rm.WestDoor)
+                {
+                    KRm = room.AddComponent<KeyRoom>();
+                    KRm.KeyAccess = KeyRooms;
+                    KRm.KeyNumber = KeyRooms;
+                    KRm.NorthDoor = Rm.NorthDoor;
+                    KRm.SouthDoor = Rm.SouthDoor;
+                    KRm.EastDoor = Rm.EastDoor;
+                    KRm.WestDoor = Rm.WestDoor;
+                    KRm.NorthRoom = Rm.NorthRoom;
+                    KRm.SouthRoom = Rm.SouthRoom;
+                    KRm.EastRoom = Rm.EastRoom;
+                    KRm.WestRoom = Rm.WestRoom;
+                    KRm.WestDoor.GetComponent<Door>().KeyAccess = KeyRooms;
+                    return;
+                }
+            }
         }
     }
 
