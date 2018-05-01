@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerPawn : PWPawn
 {
 
@@ -79,8 +79,10 @@ public class PlayerPawn : PWPawn
         if (Shields <= 0)
         {
             controller.RequestSpectate();
-            //Destroy(gameObject);
-
+            Destroy(gameObject);
+            FindObjectOfType<AudioManager>().stop("Theme");
+            FindObjectOfType<AudioManager>().play("MainMenuMusic");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
         if(Shields > StartingShields * 2)
         {
@@ -197,12 +199,14 @@ public class PlayerPawn : PWPawn
         {
             if (FlameOn && Energy >= 30 && Time.time > coolDown1)
             {
+                FindObjectOfType<AudioManager>().play("Fireball");
                 Energy -= 30;
                 coolDown1 = Time.time + 1f;
                 Factory(Projectile, MagicSpawn.position, MagicSpawn.rotation, controller);
             }
             else if (!FlameOn && Energy > 0)
             {
+                FindObjectOfType<AudioManager>().play("Heal");
                 Energy--;
                 Shields++;
             }
@@ -215,6 +219,7 @@ public class PlayerPawn : PWPawn
         {
             if (!SwordSwing && bullets > 0 && Time.time > coolDown2)
             {
+                FindObjectOfType<AudioManager>().play("GunShot");
                 bullets--;
                 coolDown2 = Time.time + .33f;
                 RaycastHit hit;
@@ -232,7 +237,7 @@ public class PlayerPawn : PWPawn
                 coolDown2 = Time.time + .5f;
                 GameObject box = Factory(SwordTrigger, SwordBox.transform.position, SwordBox.transform.rotation, controller);
                 box.transform.parent = gameObject.transform;
-
+                FindObjectOfType<AudioManager>().play("SwordSwing");
                 SwordAnimation = true;
                 SwordThing.transform.Rotate(90, 0, 0);
             }
@@ -248,12 +253,14 @@ public class PlayerPawn : PWPawn
                 GunThing.SetActive(true);
                 SwordThing.SetActive(false);
                 SwordSwing = false;
+                
             }
             else
             {
                 GunThing.SetActive(false);
                 SwordThing.SetActive(true);
                 SwordSwing = true;
+              
             }
         }
     }
@@ -267,12 +274,14 @@ public class PlayerPawn : PWPawn
                 HealThing.SetActive(true);
                 FireThing.SetActive(false);
                 FlameOn = false;
+                
             }
             else
             {
                 HealThing.SetActive(false);
                 FireThing.SetActive(true);
                 FlameOn = true;
+               
             }
         }
     }

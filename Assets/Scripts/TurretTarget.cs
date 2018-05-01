@@ -14,6 +14,7 @@ public class TurretTarget : Actor
         if(Health <= 0)
         {
             Turret.Die();
+            FindObjectOfType<AudioManager>().play("TowerDeath");
         }
         return base.ProcessDamage(Source, Value, EventInfo, Instigator);
     }

@@ -13,7 +13,8 @@ public class BossRoom : MonoBehaviour {
 
         if (!turret1 && !turret2 && !turret3 && !turret4)
         {
-            //this gets called when final boss is killed so insert sax here
+            FindObjectOfType<AudioManager>().stop("Theme");
+            FindObjectOfType<AudioManager>().play("SaxSolo");
         }
 	}
 }
