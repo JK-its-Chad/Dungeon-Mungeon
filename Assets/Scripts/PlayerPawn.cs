@@ -29,13 +29,14 @@ public class PlayerPawn : PWPawn
     public int Key = 0;
 
     public Transform ProjectileSpawn, MagicSpawn;
-    public GameObject Projectile1, Projectile2, SwordBox, Camera;
-    GameObject currentProjectile;
+    public GameObject Projectile, SwordBox, Camera;
 
     int bulletdmg = 25;
-    public GameObject SwordThing;
-    public GameObject GunThing;
+    public GameObject SwordThing, GunThing;
+    public GameObject FireThing, HealThing;
     public GameObject SwordTrigger;
+
+    bool FlameOn = true;
     bool SwordSwing = false;
     bool SwordAnimation = false;
 
@@ -59,12 +60,14 @@ public class PlayerPawn : PWPawn
         Energy = StartingEnergy * 2;
         Shields = StartingShields;
         bullets = 30;
-        currentProjectile = Projectile1;
 
         GunThing.SetActive(false);
         SwordThing.SetActive(true);
 
         SwordSwing = true;
+
+        HealThing.SetActive(false);
+        FireThing.SetActive(true);
 
     }
 
@@ -190,11 +193,19 @@ public class PlayerPawn : PWPawn
 
     public override void Trigger1(float value)
     {
-        if (value != 0 && Energy >= 30 && Time.time > coolDown1)
+        if (value != 0)
         {
-            Energy -= 30;
-            coolDown1 = Time.time + 1f;
-            Factory(currentProjectile, MagicSpawn.position, MagicSpawn.rotation, controller);
+            if (FlameOn && Energy >= 30 && Time.time > coolDown1)
+            {
+                Energy -= 30;
+                coolDown1 = Time.time + 1f;
+                Factory(Projectile, MagicSpawn.position, MagicSpawn.rotation, controller);
+            }
+            else if (!FlameOn && Energy > 0)
+            {
+                Energy--;
+                Shields++;
+            }
         }
     }
 
@@ -215,7 +226,6 @@ public class PlayerPawn : PWPawn
                         monster.TakeDamage(this, bulletdmg, new DamageEventInfo(typeof(ProjectileDamageType)), Owner);
                     }
                 }
-                print("pew");
             }
             else if(SwordSwing && Time.time > coolDown2)
             {
@@ -224,9 +234,7 @@ public class PlayerPawn : PWPawn
                 box.transform.parent = gameObject.transform;
 
                 SwordAnimation = true;
-
                 SwordThing.transform.Rotate(90, 0, 0);
-                print("swing");
             }
         }
     }
@@ -254,14 +262,17 @@ public class PlayerPawn : PWPawn
     {
         if (value)
         {
-            if (SwordSwing && Time.time > coolDown2)
+            if (FlameOn)
             {
-                coolDown2 = Time.time + .5f;
-                GameObject box = Factory(SwordTrigger, SwordBox.transform.position, SwordBox.transform.rotation, controller);
-                box.transform.parent = gameObject.transform;
-                SwordAnimation = true;
-                SwordThing.transform.Rotate(90, 0, 0);
-                print("swing");
+                HealThing.SetActive(true);
+                FireThing.SetActive(false);
+                FlameOn = false;
+            }
+            else
+            {
+                HealThing.SetActive(false);
+                FireThing.SetActive(true);
+                FlameOn = true;
             }
         }
     }
@@ -270,14 +281,7 @@ public class PlayerPawn : PWPawn
     {
         if (value)
         {
-            if(currentProjectile == Projectile1)
-            {
-                currentProjectile = Projectile2;
-            }
-            else if (currentProjectile == Projectile2)
-            {
-                currentProjectile = Projectile1;
-            }
+
         }
     }
 }
