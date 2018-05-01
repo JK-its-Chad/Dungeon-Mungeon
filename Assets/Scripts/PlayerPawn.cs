@@ -34,6 +34,7 @@ public class PlayerPawn : PWPawn
 
     int bulletdmg = 25;
     public GameObject SwordThing;
+    public GameObject SwordTrigger;
     bool SwordSwing = false;
 
     private float coolDown1 = 0f;
@@ -60,6 +61,7 @@ public class PlayerPawn : PWPawn
 
         //GunThing.SetActive(true);
         SwordThing.SetActive(false);
+        SwordTrigger.SetActive(false);
 
     }
 
@@ -210,6 +212,7 @@ public class PlayerPawn : PWPawn
             else if(SwordSwing && Time.time > coolDown2)
             {
                 coolDown2 = Time.time + .5f;
+                SwordTrigger.SetActive(true);
                 print("swing");
             }
         }
