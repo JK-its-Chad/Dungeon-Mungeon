@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : Controller
 {
     public static bool LogMissingInputDelegates = true;
-    public static bool LogInputStateInfo = true;
+    public static bool LogInputStateInfo = false;
     public static bool LogHUDUpdateError = false;
 
     protected delegate void InputAxis(float value);
