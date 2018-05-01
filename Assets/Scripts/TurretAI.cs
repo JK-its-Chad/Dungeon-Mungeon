@@ -53,6 +53,7 @@ public class TurretAI : Actor {
                 Instantiate(Projectile, ProjectileSpawn.transform.position, MathObject.transform.rotation);
                 fireTimer = 2f;
             }
+            FindObjectOfType<AudioManager>().play("TowerAttack");
         }
         else fireTimer -= Time.deltaTime;
     }

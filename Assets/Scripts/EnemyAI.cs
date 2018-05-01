@@ -81,7 +81,19 @@ public class EnemyAI : PWPawn {
         
         if(tag == "Lizard")
         {
-           
+            FindObjectOfType<AudioManager>().play("Lizard");
+        }
+        if(tag == "Golem")
+        {
+            FindObjectOfType<AudioManager>().play("Golem");
+        }
+        if (tag == "Skeleton")
+        {
+            FindObjectOfType<AudioManager>().play("Skeleton");
+        }
+        if (tag == "Knight")
+        {
+            FindObjectOfType<AudioManager>().play("Knight");
         }
 
         if (Shields <= 0)

@@ -10,6 +10,7 @@ public class TurretEye : Actor
 
     protected override bool ProcessDamage(Actor Source, float Value, DamageEventInfo EventInfo, Controller Instigator)
     {
+        FindObjectOfType<AudioManager>().play("TowerStun");
         Turret.EyeHit();
         return base.ProcessDamage(Source, Value, EventInfo, Instigator);
     }
