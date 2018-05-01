@@ -58,13 +58,13 @@ public class MenuScript : PlayerController {
             canDown = true;
             canUp = true;
         }
-        else if(value > 0 && canDown)
+        else if(value < 0 && canDown)
         {
             canDown = false;
             currentBut = currentBut.NextBut;
             currentBut.But.Select();
         }
-        else if (value < 0 && canUp)
+        else if (value > 0 && canUp)
         {
             canUp = false;
             currentBut = currentBut.LastBut;
