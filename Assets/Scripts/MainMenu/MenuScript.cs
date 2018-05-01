@@ -24,7 +24,7 @@ public class MenuScript : PlayerController {
     protected override void Start()
     {
         base.Start();
-        IP = GameObject.Find("InputPoller").GetComponent<InputPoller>();
+        IP = GameObject.Find("Input Poller").GetComponent<InputPoller>();
 
         newButton NPlay = new newButton();
         newButton NOptions = new newButton();
@@ -44,11 +44,6 @@ public class MenuScript : PlayerController {
 
         currentBut = NPlay;
         currentBut.But.Select();
-    }
-
-    public override void Horizontal(float value)
-    {
-
     }
 
     public override void Vertical(float value)
