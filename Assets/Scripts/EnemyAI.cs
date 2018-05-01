@@ -78,6 +78,11 @@ public class EnemyAI : PWPawn {
     {
         Shields -= Value;
         LOG(ActorName + " HP: " + Shields);
+        
+        if(tag == "Lizard")
+        {
+           
+        }
 
         if (Shields <= 0)
         {
