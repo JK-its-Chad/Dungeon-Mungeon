@@ -6,6 +6,11 @@ public class SwordAttck : Actor {
 
     public float DamageAmount = 30.0f;
 
+    void Start()
+    {
+        Destroy(gameObject, .5f);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Actor OtherActor = other.gameObject.GetComponentInParent<Actor>();
@@ -18,8 +23,4 @@ public class SwordAttck : Actor {
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate () {
-        gameObject.SetActive(false);
-	}
 }

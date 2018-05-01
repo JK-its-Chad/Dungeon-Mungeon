@@ -29,13 +29,15 @@ public class PlayerPawn : PWPawn
     public int Key = 0;
 
     public Transform ProjectileSpawn, MagicSpawn;
-    public GameObject Projectile1, Projectile2, Camera;
+    public GameObject Projectile1, Projectile2, SwordBox, Camera;
     GameObject currentProjectile;
 
     int bulletdmg = 25;
     public GameObject SwordThing;
+    public GameObject GunThing;
     public GameObject SwordTrigger;
     bool SwordSwing = false;
+    bool SwordAnimation = false;
 
     private float coolDown1 = 0f;
     private float coolDown2 = 0f;
@@ -59,9 +61,10 @@ public class PlayerPawn : PWPawn
         bullets = 30;
         currentProjectile = Projectile1;
 
-        //GunThing.SetActive(true);
-        SwordThing.SetActive(false);
-        SwordTrigger.SetActive(false);
+        GunThing.SetActive(false);
+        SwordThing.SetActive(true);
+
+        SwordSwing = true;
 
     }
 
@@ -109,6 +112,12 @@ public class PlayerPawn : PWPawn
         {
             Energy--;
         }
+
+        if (SwordSwing && Time.time > coolDown2 - .25f && SwordAnimation)
+        {
+            SwordThing.transform.Rotate(-90, 0, 0);
+            SwordAnimation = false;
+        }
     }
 
     public static float ClampAngle(float angle, float min, float max)
@@ -128,7 +137,6 @@ public class PlayerPawn : PWPawn
     {
         if(x != 0 || z !=0)
         {
-           
             Vector3 Direction = new Vector3(0, 0, 0);
             Direction.x = (gameObject.transform.right.x * x) + (gameObject.transform.forward.x * z);
             Direction.z = (gameObject.transform.right.z * x) + (gameObject.transform.forward.z * z);
@@ -212,7 +220,12 @@ public class PlayerPawn : PWPawn
             else if(SwordSwing && Time.time > coolDown2)
             {
                 coolDown2 = Time.time + .5f;
-                SwordTrigger.SetActive(true);
+                GameObject box = Factory(SwordTrigger, SwordBox.transform.position, SwordBox.transform.rotation, controller);
+                box.transform.parent = gameObject.transform;
+
+                SwordAnimation = true;
+
+                SwordThing.transform.Rotate(90, 0, 0);
                 print("swing");
             }
         }
@@ -224,13 +237,13 @@ public class PlayerPawn : PWPawn
         {
             if(SwordSwing)
             {
-                //GunThing.SetActive(true);
+                GunThing.SetActive(true);
                 SwordThing.SetActive(false);
                 SwordSwing = false;
             }
             else
             {
-                //GunThing.SetActive(false);
+                GunThing.SetActive(false);
                 SwordThing.SetActive(true);
                 SwordSwing = true;
             }
@@ -241,7 +254,15 @@ public class PlayerPawn : PWPawn
     {
         if (value)
         {
-
+            if (SwordSwing && Time.time > coolDown2)
+            {
+                coolDown2 = Time.time + .5f;
+                GameObject box = Factory(SwordTrigger, SwordBox.transform.position, SwordBox.transform.rotation, controller);
+                box.transform.parent = gameObject.transform;
+                SwordAnimation = true;
+                SwordThing.transform.Rotate(90, 0, 0);
+                print("swing");
+            }
         }
     }
 
