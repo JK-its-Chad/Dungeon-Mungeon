@@ -9,6 +9,7 @@ public class PWHUD : FrameworkHUD
     public int Shields = 0;
     public int Energy = 0;
     public int Bullets = 0;
+    public int Key = 0;
 
 
 
@@ -17,6 +18,7 @@ public class PWHUD : FrameworkHUD
     public Slider ShieldSlider;
     public Text EnergyField;
     public Text BulletField;
+    public Image KeyLevel;
 
     public GameObject ActivePanel;
     public GameObject SpectatePanel;
@@ -43,6 +45,15 @@ public class PWHUD : FrameworkHUD
         if(BulletField)
         {
             BulletField.text = "Bullets: " + Bullets;
+        }
+        if(KeyLevel)
+        {
+            switch(Key)
+            {
+                case 0:
+                    //KeyLevel.color = "RED";
+                    break;
+            }
         }
     }
 }
