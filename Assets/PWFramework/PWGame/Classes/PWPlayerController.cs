@@ -62,6 +62,7 @@ public class PWPlayerController : PlayerController {
             hud.Shields = (int)pawn.Shields;
             hud.Energy = (int)pawn.Energy;
             hud.Bullets = (int)pawn.bullets;
+            hud.Key = (int)pawn.Key;
         }
         
     }

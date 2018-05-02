@@ -26,8 +26,6 @@ public class PlayerPawn : PWPawn
     private Quaternion xQuaternion;
     private Quaternion yQuaternion;
 
-    public int Key = 0;
-
     public Transform ProjectileSpawn, MagicSpawn;
     public GameObject Projectile, SwordBox, Camera;
 

@@ -51,7 +51,28 @@ public class PWHUD : FrameworkHUD
             switch(Key)
             {
                 case 0:
-                    //KeyLevel.color = "RED";
+                    KeyLevel.color = new Color(255, 00, 00, 255);
+                    break;
+                case 1:
+                    KeyLevel.color = new Color(255, 100, 00, 255);
+                    break;
+                case 2:
+                    KeyLevel.color = new Color(255, 237, 00, 255);
+                    break;
+                case 3:
+                    KeyLevel.color = new Color(135, 255, 00, 255);
+                    break;
+                case 4:
+                    KeyLevel.color = new Color(00, 255, 44, 255);
+                    break;
+                case 5:
+                    KeyLevel.color = new Color(00, 255, 128, 255);
+                    break;
+                case 6:
+                    KeyLevel.color = new Color(00, 223, 255, 255);
+                    break;
+                case 7:
+                    KeyLevel.color = new Color(00, 86, 255, 255);
                     break;
             }
         }
