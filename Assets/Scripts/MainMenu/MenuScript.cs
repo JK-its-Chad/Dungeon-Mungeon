@@ -24,7 +24,7 @@ public class MenuScript : PlayerController {
     protected override void Start()
     {
         base.Start();
-        IP = GameObject.Find("Input Poller").GetComponent<InputPoller>();
+        IP = GameObject.Find("InputPoller").GetComponent<InputPoller>();
 
         newButton NPlay = new newButton();
         newButton NOptions = new newButton();
