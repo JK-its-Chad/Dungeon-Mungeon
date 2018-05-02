@@ -209,7 +209,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 10
+  controlID: 94
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 221}
   m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 11
+  controlID: 95
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -325,18 +325,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Materials
+    - Assets/PWFramework/PWGame/Classes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Materials
+  - Assets/PWFramework/PWGame/Classes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\NHTI\Documents\GitHub\Dungeon-Mungeon
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d42a0000
-    m_LastClickedID: 10964
+    scrollPos: {x: 0, y: 60}
+    m_SelectedIDs: 4c290000
+    m_LastClickedID: 10572
     m_ExpandedIDs: 000000007c270000ea290000d42a00004a2b00009c2b0000cc2b00008e2c00001c2e0000d82e0000f42e000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -481,23 +481,23 @@ MonoBehaviour:
     height: 534
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ce2a0000
+    m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 1afcffff000000001e3000003830000066300000
+    m_ExpandedIDs: 4cecfffff2f7ffff1afcffff000000001e3000003830000066300000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: BlackSpace (1)
+      m_OriginalName: BlackSpace (1)
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: -54844
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 4}
     m_SearchString: 
@@ -533,14 +533,14 @@ MonoBehaviour:
     width: 1004
     height: 534
   m_SceneLighting: 1
-  lastFramingTime: 243.29396756161958
+  lastFramingTime: 437.05728467564865
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 574, y: 267.5, z: 0}
+    m_Target: {x: -0.0333364, y: -0.625, z: 0.5812501}
     speed: 2
-    m_Value: {x: 574, y: 267.5, z: 0}
+    m_Value: {x: -0.0333364, y: -0.625, z: 0.5812501}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -563,13 +563,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.04678717, y: -0.0143854, z: 0.00067297166, w: -0.998803}
+    m_Target: {x: -0.006856608, y: -0.91884696, z: 0.39424565, w: -0.015985385}
     speed: 2
-    m_Value: {x: -0.046787173, y: -0.014385401, z: 0.0006729717, w: -0.9988031}
+    m_Value: {x: -0.006856567, y: -0.9188415, z: 0.3942433, w: -0.01598529}
   m_Size:
-    m_Target: 743.9256
+    m_Target: 51.50415
     speed: 2
-    m_Value: 743.9256
+    m_Value: 51.50415
   m_Ortho:
     m_Target: 0
     speed: 2
