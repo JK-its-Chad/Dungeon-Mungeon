@@ -73,13 +73,18 @@ public class MonsterDoor : Door {
                 {
                     Vector3 centerOfRoom = Arch.SecondRoom.transform.position;
 
+                    for (int i = 0; i < Arch.KeyAccess + 1; i++)
+                    {
+                        pickMonster(randomPos(centerOfRoom));
+                        pickMonster(randomPos(centerOfRoom));
+                    }
                     pickMonster(randomPos(centerOfRoom));
-                    pickMonster(randomPos(centerOfRoom));
-                    pickMonster(randomPos(centerOfRoom));
-
 
                     pickProp(randomPos(centerOfRoom));
                     pickProp(randomPos(centerOfRoom));
+                    pickSpikes(randomPos(centerOfRoom));
+                    pickSpikes(randomPos(centerOfRoom));
+
                     Arch.SecondRoom.GetComponent<Room>().canSpawn = false;
                 }
             }
@@ -131,13 +136,17 @@ public class MonsterDoor : Door {
                 {
                     Vector3 centerOfRoom = Arch.FirstRoom.transform.position;
 
+                    for (int i = 0; i < Arch.KeyAccess + 1; i++)
+                    {
+                        pickMonster(randomPos(centerOfRoom));
+                        pickMonster(randomPos(centerOfRoom));
+                    }
                     pickMonster(randomPos(centerOfRoom));
-                    pickMonster(randomPos(centerOfRoom));
-                    pickMonster(randomPos(centerOfRoom));
-
 
                     pickProp(randomPos(centerOfRoom));
                     pickProp(randomPos(centerOfRoom));
+                    pickSpikes(randomPos(centerOfRoom));
+                    pickSpikes(randomPos(centerOfRoom));
 
                     Arch.FirstRoom.GetComponent<Room>().canSpawn = false;
                 }
@@ -161,6 +170,11 @@ public class MonsterDoor : Door {
                 item = rocks;
                 break;
         }
+        Instantiate(item, pos, faceDoor);
+    }
+    void pickSpikes(Vector3 pos)
+    {
+        item = spikes;
         Instantiate(item, pos, faceDoor);
     }
     GameObject pickMonster(Vector3 pos)
