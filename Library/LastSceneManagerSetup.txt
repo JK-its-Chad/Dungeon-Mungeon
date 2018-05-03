@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
 - path: Assets/Scenes/MainMenu.unity
-=======
-- path: Assets/Scenes/Victory.unity
->>>>>>> af7f6a9e41613b4f5500388f287b88920e086cbe
   isLoaded: 1
   isActive: 1
