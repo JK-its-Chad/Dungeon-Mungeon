@@ -260,6 +260,10 @@ public class PlayerPawn : PWPawn
                 SwordSwing = true;
               
             }
+            if(paused)
+            {
+                paused = false;
+            }
         }
     }
 
@@ -278,8 +282,11 @@ public class PlayerPawn : PWPawn
             {
                 HealThing.SetActive(false);
                 FireThing.SetActive(true);
-                FlameOn = true;
-               
+                FlameOn = true; 
+            }
+            if (paused)
+            {
+                TakeDamage(this, Shields, new DamageEventInfo(typeof(ProjectileDamageType)), Owner);
             }
         }
     }
@@ -288,8 +295,17 @@ public class PlayerPawn : PWPawn
     {
         if (value)
         {
-
+            if (paused)
+            {
+                paused = false;
+            }
+            else
+            {
+                paused = true;
+            }
         }
     }
+
 }
+
 

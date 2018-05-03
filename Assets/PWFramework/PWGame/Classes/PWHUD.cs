@@ -10,6 +10,7 @@ public class PWHUD : FrameworkHUD
     public int Energy = 0;
     public int Bullets = 0;
     public int Key = 0;
+    public bool paused = false;
 
 
 
@@ -19,6 +20,7 @@ public class PWHUD : FrameworkHUD
     public Text EnergyField;
     public Text BulletField;
     public Image KeyLevel;
+    public GameObject Pause;
 
     public GameObject ActivePanel;
     public GameObject SpectatePanel;
@@ -45,6 +47,17 @@ public class PWHUD : FrameworkHUD
         if(BulletField)
         {
             BulletField.text = "Bullets: " + Bullets;
+        }
+        if(Pause)
+        {
+            if(paused)
+            {
+                Pause.SetActive(true);
+            }
+            else
+            {
+                Pause.SetActive(false);
+            }
         }
         if(KeyLevel)
         {

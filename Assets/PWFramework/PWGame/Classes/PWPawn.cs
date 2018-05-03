@@ -11,6 +11,8 @@ public class PWPawn : Pawn {
     public float Shields = 100.0f;
     public int bullets = 30;
     public int Key = 0;
+    public bool paused = false;
+
 
     public virtual void Move(float value, float z)
     {
@@ -66,4 +68,5 @@ public class PWPawn : Pawn {
     {
        
     }
+
 }

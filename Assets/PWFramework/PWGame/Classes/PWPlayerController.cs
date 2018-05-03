@@ -63,6 +63,7 @@ public class PWPlayerController : PlayerController {
             hud.Energy = (int)pawn.Energy;
             hud.Bullets = (int)pawn.bullets;
             hud.Key = (int)pawn.Key;
+            hud.paused = (bool)pawn.paused;
         }
         
     }
@@ -155,7 +156,6 @@ public class PWPlayerController : PlayerController {
         if (value)
         {
             ExitPanel.SetActive(!ExitPanel.activeSelf);
-        }   
+        }
     }
-
 }

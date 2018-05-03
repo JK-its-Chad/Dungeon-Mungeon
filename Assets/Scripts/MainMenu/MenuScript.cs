@@ -66,7 +66,7 @@ public class MenuScript : PlayerController {
             currentBut.But.Select();
         }
     }
-    public override void Fire1(bool value)
+    public override void Fire2(bool value)
     {
         if(value)currentBut.But.onClick.Invoke();
     }
