@@ -189,7 +189,6 @@ public class MapGenerator : MonoBehaviour
 
     private void PlaceExtraRooms()
     {
-        Draw = false;
         bool successful;
         int count = 0;
 
