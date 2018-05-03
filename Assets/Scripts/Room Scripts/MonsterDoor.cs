@@ -77,13 +77,14 @@ public class MonsterDoor : Door {
                     {
                         pickMonster(randomPos(centerOfRoom));
                         pickMonster(randomPos(centerOfRoom));
+                        pickSpikes(randomPos(centerOfRoom));
                     }
                     pickMonster(randomPos(centerOfRoom));
 
                     pickProp(randomPos(centerOfRoom));
                     pickProp(randomPos(centerOfRoom));
                     pickSpikes(randomPos(centerOfRoom));
-                    pickSpikes(randomPos(centerOfRoom));
+                   
 
                     Arch.SecondRoom.GetComponent<Room>().canSpawn = false;
                 }
@@ -140,13 +141,14 @@ public class MonsterDoor : Door {
                     {
                         pickMonster(randomPos(centerOfRoom));
                         pickMonster(randomPos(centerOfRoom));
+                        pickSpikes(randomPos(centerOfRoom));
                     }
                     pickMonster(randomPos(centerOfRoom));
 
                     pickProp(randomPos(centerOfRoom));
                     pickProp(randomPos(centerOfRoom));
                     pickSpikes(randomPos(centerOfRoom));
-                    pickSpikes(randomPos(centerOfRoom));
+                    
 
                     Arch.FirstRoom.GetComponent<Room>().canSpawn = false;
                 }
