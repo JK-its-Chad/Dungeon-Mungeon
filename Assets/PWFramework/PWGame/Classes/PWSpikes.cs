@@ -9,7 +9,7 @@ public class PWSpikes : Actor {
     private void OnTriggerEnter(Collider other)
     {
         Actor OtherActor = other.gameObject.GetComponentInParent<Actor>();
-        if (OtherActor)
+        if (OtherActor && other.tag == "Player")
         {
             OtherActor.TakeDamage(
                 this, 

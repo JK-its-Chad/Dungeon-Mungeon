@@ -202,7 +202,7 @@ public class PlayerPawn : PWPawn
                 coolDown1 = Time.time + 1f;
                 Factory(Projectile, MagicSpawn.position, MagicSpawn.rotation, controller);
             }
-            else if (!FlameOn && Energy > 0)
+            else if (!FlameOn && Energy > 0 && Shields < 200)
             {
                 FindObjectOfType<AudioManager>().play("Heal");
                 Energy--;
