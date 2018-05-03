@@ -78,7 +78,7 @@ public class EnemyAI : PWPawn {
     {
         Shields -= Value;
         LOG(ActorName + " HP: " + Shields);
-        
+
         if(tag == "Lizard")
         {
             FindObjectOfType<AudioManager>().play("Lizard");
