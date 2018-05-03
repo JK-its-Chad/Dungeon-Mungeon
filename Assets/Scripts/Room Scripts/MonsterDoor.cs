@@ -34,7 +34,7 @@ public class MonsterDoor : Door {
             {
                 if (Arch.SecondRoom.GetComponent<KeyRoom>())
                 {
-                    if (Arch.SecondRoom.GetComponent<KeyRoom>().KeyAccess + 1 == GameObject.Find("Spawn").GetComponent<MapGenerator>().KeyRooms)
+                    if (Arch.SecondRoom.GetComponent<KeyRoom>().KeyAccess == GameObject.Find("Spawn").GetComponent<MapGenerator>().KeyRooms)
                     {
                         GameObject endGame = new GameObject();
                         BossRoom turrets = endGame.AddComponent<BossRoom>();
@@ -98,7 +98,7 @@ public class MonsterDoor : Door {
             {
                 if (Arch.FirstRoom.GetComponent<KeyRoom>())
                 {
-                    if (Arch.FirstRoom.GetComponent<KeyRoom>().KeyAccess + 1 == GameObject.Find("Spawn").GetComponent<MapGenerator>().KeyRooms)
+                    if (Arch.FirstRoom.GetComponent<KeyRoom>().KeyAccess == GameObject.Find("Spawn").GetComponent<MapGenerator>().KeyRooms)
                     {
                         GameObject endGame = new GameObject();
                         BossRoom turrets = endGame.AddComponent<BossRoom>();
