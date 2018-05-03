@@ -8,7 +8,7 @@ public class MenuScript : PlayerController {
     public Button Play;
     public Button Options;
     public Button Quit;
-    public Button Back;
+    public Button MainMenu;
 
     class newButton
     {
